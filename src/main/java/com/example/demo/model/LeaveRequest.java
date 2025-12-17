@@ -1,4 +1,13 @@
 package com.example.demo.model;
 
 import jakarta.persistance.Entity;
-import jakarta.p
+import jakarta.persistance.Id;
+import jakarta.persistance.GeneratedValue;
+import jakarta.persistance.GenerationType;
+import jakarta.persistance.ManyToOne;
+import java.time.LocalDate;
+
+@Entity
+public class LeaveRequest{
+    
+}
