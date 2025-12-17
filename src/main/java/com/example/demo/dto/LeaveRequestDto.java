@@ -1,6 +1,8 @@
 package com.example.demo.dto;
 
 
+import java.time.LocalDate;
+
 public class LeaveRequestDto{
     private Long id;
     private String employeeId;
