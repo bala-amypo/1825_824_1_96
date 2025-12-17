@@ -13,10 +13,10 @@ public class UserAccount{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Colomn(unique=true)
+    @Colomn(unique = true)
     private String username;
 
-    @Colomn(unique=true)
+    @Colomn(unique = true)
     private String email;
 
     private String password;

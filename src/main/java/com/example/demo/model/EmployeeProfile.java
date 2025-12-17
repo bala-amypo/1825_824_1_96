@@ -10,13 +10,7 @@ import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(
-    name = "employee_profile",
-    UniqueConstraints = {
-        @UniqueConstraint(columnNames = "employeeId"),
-        @UniqueConstraint(columnNames = "email")
-    }
-)
+
 public class EmployeeProfile{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
