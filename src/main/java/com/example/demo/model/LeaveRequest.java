@@ -27,5 +27,6 @@ public class LeaveRequest{
     public EmployeeProfile getEmployee() {return employee;}
     public void setEmployee(EmployeeProfile employee) {this.employee=employee;}
     public LocalDate getStartDate() {return startDate;}
-    v
+    public void setStartDate(LocalDate startDate) {this.startDate=startDate;}
+    public LocalDate getEndDate() {return endDate;}
 }
