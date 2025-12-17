@@ -1,6 +1,6 @@
 package com.example.demo.config;
 
-import org.springframework.content.annotation.Configuration;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class WebConfig{
