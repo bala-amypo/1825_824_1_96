@@ -11,5 +11,16 @@ import jakarta.persistance.OneToOne;
 public class UserAccount{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    
+    private Long id;
+
+    @Colomn(unique=true)
+    private String username;
+
+    @Colomn(unique=true)
+    private String email;
+
+    private String password;
+    private String role;
+
+    @OneToOne
 }
