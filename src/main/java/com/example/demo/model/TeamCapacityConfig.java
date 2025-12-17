@@ -19,5 +19,7 @@ public class TeamCapacityConfig{
     private Integer minCapacityPercent;
 
     public Long getId() {return id;}
-    public String getTeamName()
+    public String getTeamName() {return teamName;}
+    public Integer getTotalHeadCount() {return totalHeadcount;}
+    public Integer getMinCapacityPercent() {return minCapacityPercent;}
 }
