@@ -1,4 +1,5 @@
 package com.example.demo.exception;
+import java.lang;
 
 public class ResourceNotFoundException extends RuntimeException{
     public ResourceNotFoundException(String message){
