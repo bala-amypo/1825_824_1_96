@@ -9,5 +9,10 @@ import java.time.LocalDate;
 
 @Entity
 public class LeaveRequest{
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    private EmployeeProfile
 }
