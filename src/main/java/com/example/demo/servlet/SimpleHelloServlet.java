@@ -10,6 +10,7 @@ public class SimpleHelloServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
         response.setStatus(200);
-        response.setContentType
+        response.setContentType("text/plain");
+        response.getWriter().write("Hello from servlet");
     }
 }
