@@ -19,5 +19,17 @@ import java.time.LocalDateTime;
 )
 public class EmployeeProfile{
     @Id
-    @GeneratedValue(strategy=GenerationType)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+
+    private String employeeId;
+    private String fullname;
+    private String email;
+    private String teamName;
+    private String role;
+    private boolean active = true;
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    public Long getId() {return id;}
+    public void setId(Long id) {this.id=} 
 }
