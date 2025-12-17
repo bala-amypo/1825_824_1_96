@@ -1,12 +1,12 @@
 package com.example.demo.model;
 
-import jakarta.persistance.Entity;
-import jakarta.persistance.Table;
-import jakarta.persistance.Id;
-import jakarta.persistance.GeneratedValue;
-import jakarta.persistance.GenerationType;
-import jakarta.persistance.Column;
-import jakarta.persistance.UniqueConstraint;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDateTime;
 
 @Entity
