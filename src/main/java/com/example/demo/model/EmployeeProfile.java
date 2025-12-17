@@ -31,5 +31,10 @@ public class EmployeeProfile{
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Long getId() {return id;}
-    public void setId(Long id) {this.id=} 
+    public void setId(Long id) {this.id=id;}
+    public String getEmployeeId() {return employeeId;}
+    public void setEmployeeId(String employeeId) {this.employeeId=employeeId;}
+    public String getFullName(String fullname) {return fullname;}
+    public void setFullName(String fullname) {this.fullname=fullname;}
+    public String getEmail() {} 
 }
