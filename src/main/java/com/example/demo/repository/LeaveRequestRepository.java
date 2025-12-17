@@ -1,5 +1,5 @@
 package com.example.demo.repository;
-
+import java.time.LocalDate;
 import com.example.demo.model.LeaveRequest;
 import com.example.demo.model.EmployeeProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
