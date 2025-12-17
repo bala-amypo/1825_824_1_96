@@ -1,3 +1,3 @@
 package com.example.demo.exception;
 
-public class Resoure
+public class ResourceNotFoundException
