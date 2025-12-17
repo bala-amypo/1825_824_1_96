@@ -36,5 +36,11 @@ public class EmployeeProfile{
     public void setEmployeeId(String employeeId) {this.employeeId=employeeId;}
     public String getFullName(String fullname) {return fullname;}
     public void setFullName(String fullname) {this.fullname=fullname;}
-    public String getEmail() {} 
+    public String getEmail() {return email;}
+    public void setEmail(String email) {this.email=email;}
+    public String getTeamName() {return teamName;}
+    public void setTeamName(String teamName) {this.teamName=teamName;}
+    public String getRole() {return role;}
+    public void setRole(String role) {this.role=role;}
+    public boolean isActive() {return active;} 
 }
