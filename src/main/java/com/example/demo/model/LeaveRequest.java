@@ -24,5 +24,8 @@ public class LeaveRequest{
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id=id;}
-    public EmployeeProfile getEmployee() {return }
+    public EmployeeProfile getEmployee() {return employee;}
+    public void setEmployee(EmployeeProfile employee) {this.employee=employee;}
+    public LocalDate getStartDate() {return startDate;}
+    
 }
