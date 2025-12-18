@@ -28,5 +28,7 @@ public class LeaveRequestController{
         return service.getByEmployee(id);
     }
     @GetMapping("/leave/overlap")
-    public List<LeaveRequest> overlap(@RequestParam String teamName, @RequestPara)
+    public List<LeaveRequest> overlap(@RequestParam String teamName, @RequestParam LocalDate start, @RequestParam LocalDate end){
+        return service.getOverlappingForTeam(teamName, start, end);
+    }
 }
