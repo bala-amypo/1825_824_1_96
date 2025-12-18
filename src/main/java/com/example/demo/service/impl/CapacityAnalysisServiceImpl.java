@@ -34,6 +34,8 @@ public class CapacityAnalysisServiceImpl implements CapacityAnalysisService{
             if(capacity<config.getMinCapacityPercent()) risky=true;
         }
         CapacityAnalysisResultDto dto=new CapacityAnalysisResultDto();
-        d
+        dto.setRisky(risky);
+        dto.setCapacityByDate(map);
+        return dto;
     }
 }
