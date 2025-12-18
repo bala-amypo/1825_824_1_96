@@ -13,6 +13,6 @@ public class JwtTokenProvider{
         return Jwts.builder().setSubject(username).setExpiration(new Date(System.currentTimeMillis()+EXPIRATION)).signWith(SignatureAlgorithm.HS256, SECRET).compact();
     }
     public String extractUserName(String token){
-        return Jwts.parser().setSigningKey(SECRET).parse
+        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
     }
 }
