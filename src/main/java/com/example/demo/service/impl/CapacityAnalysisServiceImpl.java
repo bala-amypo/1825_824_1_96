@@ -21,5 +21,12 @@ public class CapacityAnalysisServiceImpl implements CapacityAnalysisService{
     @Autowired
     private EmployeeProfileRepository empRepo;
     @Override
-    public CapacityAnalysisResultDto analyzeTeamCapacity(String teamName, LocalDate start, LocalD)
+    public CapacityAnalysisResultDto analyzeTeamCapacity(String teamName, LocalDate start, LocalDate end){
+        TeamCapacityConfig config=configRepo.findByTeamName(teamName).orElse(null);
+        List<LeaveRequest> leaves=leaveRepo.findApprovedOverlappingForTeam(teamName, start, end);
+        int total=config.getTotalHeadcount();
+        boolean risky=false;
+        Map<LocalDate, Double> map=new HashMap<>();
+        for(LocalDate d=start;id.isAfter(end);d=d.plusDays(1)){}
+    }
 }
