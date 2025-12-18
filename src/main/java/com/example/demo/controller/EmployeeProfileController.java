@@ -31,5 +31,7 @@ public class EmployeeProfileController{
         return service.getByTeam(team);
     }
     @GetMapping("/employees")
-    public List<>
+    public List<EmployeeProfile> getAll(){
+        return service.getAll();
+    }
 }
