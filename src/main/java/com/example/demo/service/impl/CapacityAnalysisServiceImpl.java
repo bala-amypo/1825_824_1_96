@@ -30,7 +30,10 @@ public class CapacityAnalysisServiceImpl implements CapacityAnalysisService{
         for(LocalDate d=start;id.isAfter(end);d=d.plusDays(1)){
             long onLeave=leaves.stream().filter(l->!d.isBefore(l.getStartDate()) && !d.isAfter(l.getEndDate())).count();
             double capacity=((double)(total-onLeave)/total)*100;
-            map.put()
+            map.put(d, capacity);
+            if(capacity<config.getMinCapacityPercent()) risky=true;
         }
+        CapacityAnalysisResultDto dto=new CapacityAnalysisResultDto();
+        d
     }
 }
