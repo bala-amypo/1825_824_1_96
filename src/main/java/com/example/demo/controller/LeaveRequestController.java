@@ -15,4 +15,18 @@ public class LeaveRequestController{
     public LeaveRequest add(@RequestBody LeaveRequest req){
         return service.create(req);
     }
+    @PutMapping("/leave/{id}/approve")
+    public void approve(@PathVariable Long id){
+        service.approve(id);
+    }
+    @PutMapping("/leave/{id}/reject")
+    public void reject(@PathVariable Long id){
+        service.reject(id);
+    }
+    @GetMapping("/leave/employee/{id}")
+    public List<LeaveRequest> getByEmployee(@PathVariable Long id){
+        return service.getByEmployee(id);
+    }
+    @GetMapping("/leave/overlap")
+    public List<LeaveRequest> overlap(@RequestParam String teamName, @RequestPara)
 }
