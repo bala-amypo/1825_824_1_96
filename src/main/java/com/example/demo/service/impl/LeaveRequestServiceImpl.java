@@ -43,6 +43,6 @@ public class LeaveRequestServiceImpl implements LeaveRequestService{
     }
     @Override
     public List<LeaveRequest> getOverlappingForTeam(String teamName, LocalDate start, LocalDate end){
-        return repo.findApprovedOverlappingForTeam(teamName)
+        return repo.findApprovedOverlappingForTeam(teamName, start, end);
     }
 }
