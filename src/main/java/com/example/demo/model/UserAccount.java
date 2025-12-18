@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Colomn;
+import jakarta.persistence.Column;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -13,10 +13,10 @@ public class UserAccount{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Colomn(unique = true)
+    @Column(unique = true)
     private String username;
 
-    @Colomn(unique = true)
+    @Column(unique = true)
     private String email;
 
     private String password;
