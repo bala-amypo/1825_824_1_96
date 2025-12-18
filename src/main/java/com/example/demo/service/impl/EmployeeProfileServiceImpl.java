@@ -36,6 +36,10 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService{
     }
     @Override
     public List<EmployeeProfile> getByTeam(String teamName){
-        
+        return repo.findByTeamNameAndActiveTrue(teamName);
+    }
+    @Override
+    public List<EmployeeProfile> getAll(){
+        return repo.findAll();
     }
 }
