@@ -23,5 +23,6 @@ public class AuthServiceImpl implements AuthService{
         if(user!=null && encoder.matches(req.getPassword(), user.getPassword())){
             String token=jwt.generateToken(user.getUsername());
         }
+        return null;
     }
 }
