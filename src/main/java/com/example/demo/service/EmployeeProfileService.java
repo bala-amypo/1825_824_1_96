@@ -10,4 +10,4 @@ public interface EmployeeProfileService{
     EmployeeProfileDto getById(Long id);
     List<EmployeeProfileDto> getByTeam(string teamName);
     List<EmployeeProfileDto> getAll();
-}
+}-
