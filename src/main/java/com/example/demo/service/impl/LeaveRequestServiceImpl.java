@@ -14,4 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LeaveRequestServiceImpl implements LeaveRequestService{
     @Autowired
     private LeaveRequestRepository repo;
+    @Autowired
+    private EmployeeProfileRepository empRepo;
+    @Override
+    public LeaveRequest create(LeaveRequest req){
+        return repo.save(req);
+    }
+    @Override
+    public void approve(Long id){
+        LeaveRequest l=repo.findById(id).orElse(null);
+        if(l!=null){
+            l.setStatus("APP")
+        }
+    }
 }
