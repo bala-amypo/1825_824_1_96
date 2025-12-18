@@ -24,7 +24,25 @@ public class LeaveRequestServiceImpl implements LeaveRequestService{
     public void approve(Long id){
         LeaveRequest l=repo.findById(id).orElse(null);
         if(l!=null){
-            l.setStatus("APP")
+            l.setStatus("APPROVED");
+            repo.save(l);
         }
+    }
+    @Override
+    public void reject(Long id){
+        LeaveRequest l=repo.findById(id).orElse(null);
+        if(l!=null){
+            l.setStatus("REJECTED");
+            repo.save(l);
+        }
+    }
+    @Override
+    public List<LeaveRequest> getByEmployee(Long employeeId){
+        EmployeeProfile emp=empRepo.findById(employeeId).orElse(null);
+        return repo.findByEmployee(emp);
+    }
+    @Override
+    public List<LeaveRequest> getOverlappingForTeam(String teamName, LocalDate start, LocalDate end){
+        return repo.findApprovedOverlappingForTeam(teamName)
     }
 }
