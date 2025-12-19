@@ -1,13 +1,4 @@
 package com.example.demo.service;
 
-import com.examole.demo.dto.EmployeeProfileDto;
+import com.example.demo.model.EmployeeProfile;
 import java.util.List;
-
-public interface EmployeeProfileService{
-    EmployeeProfileDto create(EmployeeProfileDto dto);
-    EmployeeProfileDto update(Long id, EmployeeProfileDto dto);
-    void deactivate(Long id);
-    EmployeeProfileDto getById(Long id);
-    List<EmployeeProfileDto> getByTeam(string teamName);
-    List<EmployeeProfileDto> getAll();
-}
