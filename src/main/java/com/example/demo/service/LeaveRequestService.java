@@ -6,5 +6,9 @@ import java.util.List;
 
 public interface LeaveRequestService{
 
-    LeaveRequest create( 
+    LeaveRequest create(LeaveRequest leave);
+    void approve(Long id);
+    void reject(Long id);
+    List<LeaveRequest> getByEmployee(Long employeeId);
+    List<LeaveRequest> getOverlappingForTeam(String teamName, LocalDate) 
 }
