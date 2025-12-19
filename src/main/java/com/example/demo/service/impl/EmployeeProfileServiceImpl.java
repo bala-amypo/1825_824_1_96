@@ -24,7 +24,17 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService{
     public void deactivate(Long id){
         Employee emp=repo.findById(id).orElse(null);
         if(emp!=null){
-            emp.setActive
+            emp.setActive(false);
+            repo.save(emp);
         }
     }
+    @Override
+    public EmployeeProfile getById(Long id){
+        return repo.findById(id).orElse(null);
+    }
+    @Override
+    public List<EmployeeProfile> getByTeam(String team){
+        return repo.findByTeamNameAndActiveTrue(team);
+    }
+    @Override
 }
