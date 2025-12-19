@@ -10,5 +10,5 @@ public interface LeaveRequestService{
     void approve(Long id);
     void reject(Long id);
     List<LeaveRequest> getByEmployee(Long employeeId);
-    List<LeaveRequest> getOverlappingForTeam(String teamName, LocalDate) 
+    List<LeaveRequest> getOverlappingForTeam(String teamName, LocalDate start, LocalDate end); 
 }
