@@ -18,6 +18,24 @@ public class LeaveRequestServiceImpl implements LeaveRequestService{
     EmployeeProfileRepository empRepo;
     @Override
     public LeaveRequest create(LeaveRequest leave){
-        
+        return repo.save(leave);
     }
+    @Override
+    public void approve(Long id){
+        LeaveRequest req=repo.findById(id).orElse(null);
+        if(req!=null){
+            req.setStatus("APPROVED");
+            repo.save(req);
+        }
+    }
+    @Override
+    public void reject(Long id){
+        LeaveRequest req=repo.findById(id).orElse(null);
+        if(req!=null){
+            req.setStatus("REJECTED");
+            repo.save(req);
+        }
+    }
+    @Override
+    public lis
 }
