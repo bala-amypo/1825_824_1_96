@@ -23,7 +23,9 @@ public class CapacityAnalysisServiceImpl implements CapacityAnalysisService{
         int total=config.getTotalHeadcount();
         Map<LocalDate, Double> result = new HashMap<>();
         for(LocalDate d = start;!d.isAfter(end); d=d.plusDays(1)){
-            long countOnLeave=leaves.stream().filter(l)
+            long countOnLeave=leaves.stream().filter(l->!d.isBefore(l.getStartDate()) && !d.isAfter(l.getEndDate())).count();
+            result.put(d, ((total-countOnLeave)/(double) total)*100);
         }
+        return result;
     }
 }
