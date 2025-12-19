@@ -37,5 +37,12 @@ public class LeaveRequestServiceImpl implements LeaveRequestService{
         }
     }
     @Override
-    public lis
+    public List<LeaveRequest> getByEmployee(Long employeeId){
+        EmployeeProfile emp=empRepo.findById(employeeId).orElse(null);
+        return repo.findByEmployee(emp);
+    }
+    @Override
+    public List<LeaveRequest> getOverlappingForTeam(String teamName, LocalDate start, LocalDate end){
+        return repo.findByApprovedOverlappingForTeam(teamName, start, end);
+    }
 }
