@@ -9,5 +9,22 @@ import java.util.List;
 
 @Service
 public class EmployeeProfileServiceImpl implements EmployeeProfileService{
-    
+    @Autowired
+    EmployeeProfileRepository repo;
+    @Override
+    public EmployeeProfile create(EmployeeProfile emp){
+        return repo.save(emp);
+    }
+    @Override
+    public EmployeeProfile update(Long id, EmployeeProfile emp){
+        emp.setId(id);
+        return repo.save(emp);
+    }
+    @Override
+    public void deactivate(Long id){
+        Employee emp=repo.findById(id).orElse(null);
+        if(emp!=null){
+            emp.setActive
+        }
+    }
 }
