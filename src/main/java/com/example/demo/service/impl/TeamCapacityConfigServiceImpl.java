@@ -17,6 +17,10 @@ public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService{
     @Override
     public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule){
         rule.setId(id);
-        return repo.save
+        return repo.save(rule);
+    }
+    @Override
+    public TeamCapacityConfig getRuleByTeam(String teamName){
+        return repo.findByTeamName(teamName).orElse(null);
     }
 }
