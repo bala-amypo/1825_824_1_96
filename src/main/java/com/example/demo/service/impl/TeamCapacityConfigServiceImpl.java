@@ -10,5 +10,13 @@ import org.springframework.stereotype.Service;
 public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService{
     @Autowired
     TeamCapacityConfigRepository repo;
-    
+    @Override
+    public TeamCapacityConfig createRule(TeamCapacityConfig rule){
+        return repo.save(rule);
+    }
+    @Override
+    public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule){
+        rule.setId(id);
+        return repo.save
+    }
 }
