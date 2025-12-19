@@ -4,6 +4,6 @@ import com.example.demo.model.TeamCapacityConfig;
 
 public interface TeamCapacityConfigService{
     TeamCapacityConfig createRule(TeamCapacityConfig rule);
-    TeamCapacityConfig updateRule(Long id, TeamCapacityConfig updatedRule);
-    TeamCapacityConfig getRuleByTeam(String teamName);
+    TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule);
+    T
 }
