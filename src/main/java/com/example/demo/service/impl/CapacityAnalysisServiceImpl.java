@@ -11,4 +11,14 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
-public class CapacityAnalysisServiceImpl implements 
+public class CapacityAnalysisServiceImpl implements CapacityAnalysisService{
+    @Autowired
+    TeamCapacityConfigRepository configRepo;
+    @Autowired
+    LeaveRequestRepository leaveRepo;
+    @Override
+    public Map<LocalDate, Double> analyze(String teamName, LocalDate start, LocalDate end){
+        TeamCapacityConfig config=configRepo.findByTeamName(teamName).orElse(null);
+        List<LeaveRequest> leaves=leaveRepo.findApprovedOverlapping
+    }
+}
