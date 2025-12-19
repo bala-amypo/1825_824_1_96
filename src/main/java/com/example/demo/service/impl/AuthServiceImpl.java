@@ -17,5 +17,11 @@ public class AuthServiceImpl implements AuthService{
     @Autowired
     JwtTokenProvider jwt;
     @Override
-    public class authenticate(String username, String password)
+    public String authenticate(String username, String password){
+        UserAccount user=repo.findByUsername(username).orElse(null);
+        if(user!=null && encoder.matches(password, user.getPassword())){
+            return jwt.generateToken(username);
+        }
+        return null;
+    }
 }
