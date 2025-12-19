@@ -19,6 +19,11 @@ public class CapacityAnalysisServiceImpl implements CapacityAnalysisService{
     @Override
     public Map<LocalDate, Double> analyze(String teamName, LocalDate start, LocalDate end){
         TeamCapacityConfig config=configRepo.findByTeamName(teamName).orElse(null);
-        List<LeaveRequest> leaves=leaveRepo.findApprovedOverlapping
+        List<LeaveRequest> leaves=leaveRepo.findApprovedOverlappingForTeam(teamName, start, end);
+        int total=config.getTotalHeadcount();
+        Map<LocalDate, Double> result = new HashMap<>();
+        for(LocalDate d = start;!d.isAfter(end); d=d.plusDays(1)){
+            long countOnLeave=leaves.stream().filter(l)
+        }
     }
 }
