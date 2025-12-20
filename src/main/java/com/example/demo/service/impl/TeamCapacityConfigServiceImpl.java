@@ -3,24 +3,37 @@ package com.example.demo.service.impl;
 import com.example.demo.model.TeamCapacityConfig;
 import com.example.demo.repository.TeamCapacityConfigRepository;
 import com.example.demo.service.TeamCapacityConfigService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService{
-    @Autowired
-    TeamCapacityConfigRepository repo;
+public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService {
+
+    private final TeamCapacityConfigRepository repo;
+
+    public TeamCapacityConfigServiceImpl(TeamCapacityConfigRepository repo) {
+        this.repo = repo;
+    }
+
     @Override
-    public TeamCapacityConfig createRule(TeamCapacityConfig rule){
+    public TeamCapacityConfig createRule(TeamCapacityConfig rule) {
         return repo.save(rule);
     }
+
     @Override
-    public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule){
-        rule.setId(id);
-        return repo.save(rule);
+    public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule) {
+        TeamCapacityConfig existing = repo.findById(id).orElse(null);
+        if (existing == null) {
+            return null;
+        }
+
+        existing.setTeamName(rule.getTeamName());
+        existing.setMaxLeavePercent(rule.getMaxLeavePercent());
+
+        return repo.save(existing);
     }
+
     @Override
-    public TeamCapacityConfig getRuleByTeam(String teamName){
-        return repo.findByTeamName(teamName).orElse(null);
+    public TeamCapacityConfig getRuleByTeam(String team) {
+        return repo.findByTeamName(team);
     }
 }
