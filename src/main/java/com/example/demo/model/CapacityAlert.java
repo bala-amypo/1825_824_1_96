@@ -31,5 +31,19 @@ public class CapacityAlert{
     public LocalDate getDate(){
         return date;
     }
-    public void setDate()
+    public void setDate(LocalDate date){
+        this.date=date;
+    }
+    public String getSeverity(){
+        return severity;
+    }
+    public void setSeverity(String severity){
+        this.severity=severity;
+    }
+    public String getMessage(){
+        return message;
+    }
+    public void setMessage(String message){
+        this.message=message;
+    }
 }
