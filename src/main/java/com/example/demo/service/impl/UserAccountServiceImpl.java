@@ -17,6 +17,6 @@ public class UserAccountServiceImpl implements UserAccountService{
     }
     @Override
     public List<UserAccount> getAll(){
-        return repo.findAll
+        return repo.findAll();
     }
 }
