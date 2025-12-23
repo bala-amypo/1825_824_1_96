@@ -50,5 +50,7 @@ public class UserAccount{
     public EmployeeProfile getEmployeeProfile(){
         return employeeProfile;
     }
-    public void setEmployeeProfile(EmployeeProfile employeeProfile)
+    public void setEmployeeProfile(EmployeeProfile employeeProfile){
+        this.employeeProfile=employeeProfile;
+    }
 }
