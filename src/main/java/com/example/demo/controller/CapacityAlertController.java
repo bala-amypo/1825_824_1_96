@@ -15,5 +15,11 @@ public class CapacityAlertController{
     @Autowired
     private CapacityAlertService service;
     @PostMapping("/capacity-alerts")
-    public CapacityAlert create()
+    public CapacityAlert create(@RequestBody CapacityAlert alert){
+        return service.save(alert);
+    }
+    @GetMapping("/capacity-alerts/team/{teamName}")
+    public List<CapacityAlert> getByTeam(@PathVariable String teamName){
+        return service.getByTeam(teamName);
+    }
 }
