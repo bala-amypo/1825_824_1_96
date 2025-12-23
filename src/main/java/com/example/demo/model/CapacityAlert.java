@@ -14,5 +14,22 @@ public class CapacityAlert{
     private String teamName;
     private LocalDate date;
     private String severity;
-    private String 
+    private String message;
+    
+    public Long getId(){
+        return id;
+    }
+    public void setId(Long id){
+        this.id=id;
+    }
+    public String getTeamName(){
+        return teamName;
+    }
+    public void setTeamName(String teamName){
+        this.teamName=teamName;
+    }
+    public LocalDate getDate(){
+        return date;
+    }
+    public void setDate()
 }
