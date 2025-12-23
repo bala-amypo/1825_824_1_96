@@ -10,4 +10,13 @@ import com.example.demo.service.UserAccountService;
 import java.util.List;
 
 @RestController
-public class 
+public class UserAccountController{
+    @Autowired
+    private UserAccountService service;
+    @PostMapping("/users")
+    public UserAccount add(@RequestBody UserAccount user){
+        return service.save(user);
+    }
+    @GetMapping("/users")
+    public List<UserAccount> geta
+}
