@@ -18,5 +18,7 @@ public class UserAccountController{
         return service.save(user);
     }
     @GetMapping("/users")
-    public List<UserAccount> geta
+    public List<UserAccount> getAll(){
+        return service.getAll();
+    }
 }
