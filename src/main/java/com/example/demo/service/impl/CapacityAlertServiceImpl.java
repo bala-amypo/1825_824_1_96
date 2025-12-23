@@ -16,5 +16,7 @@ public class CapacityAlertServiceImpl implements CapacityAlertService{
         return repo.save(alert);
     }
     @Override
-    public List<CapacityAlert> getByTeam(String )
+    public List<CapacityAlert> getByTeam(String teamName){
+        return repo.findByTeamName(teamName);
+    }
 }
