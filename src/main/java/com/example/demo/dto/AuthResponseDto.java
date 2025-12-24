@@ -12,5 +12,7 @@ public class AuthResponseDto{
     public String getToken(){
         return token;
     }
-    public 
+    public void setToken(String token){
+        this.token=token;
+    }
 }
