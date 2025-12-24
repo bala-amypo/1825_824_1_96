@@ -33,6 +33,15 @@ public class EmployeeProfileDto{
         this.email=email;
     }
     public String getTeamName(){
-        return 
+        return teamName;
+    }
+    public void setTeamName(String teamName){
+        this.teamName=teamName;
+    }
+    public String getRole(){
+        return role;
+    }
+    public void setRole(String role){
+        this.role=role;
     }
 }
