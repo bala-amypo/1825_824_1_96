@@ -13,4 +13,7 @@ public class CapacityAnalysisResultDto{
     public Map<LocalDate, Double> getCapacityByDate(){
         return capacityByDate;
     }
+    public void setCapacityByDate(Map<LocalDate, Double> capacityByDate){
+        this.capacityByDate=capacityByDate;
+    }
 }
