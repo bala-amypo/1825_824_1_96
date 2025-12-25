@@ -9,8 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class CapacityAnalysisServiceImpl
-        implements CapacityAnalysisService {
+public class CapacityAnalysisServiceImpl implements CapacityAnalysisService {
 
     @Override
     public boolean isCapacityExceeded(
@@ -22,15 +21,10 @@ public class CapacityAnalysisServiceImpl
             return false;
         }
 
-        int minCapacityPercent = config.getMinCapacityPercent();
+        int maxAllowedLeaves =
+                (config.getMinCapacityPercent() * teamSize) / 100;
 
-        int minRequiredEmployees =
-                (teamSize * minCapacityPercent) / 100;
-
-        int currentAvailable =
-                teamSize - approvedLeaves.size();
-
-        return currentAvailable < minRequiredEmployees;
+        return approvedLeaves.size() > maxAllowedLeaves;
     }
 
     @Override
@@ -39,14 +33,10 @@ public class CapacityAnalysisServiceImpl
             LocalDate start,
             LocalDate end
     ) {
-        int count = 0;
-
-        for (LeaveRequest leave : approvedLeaves) {
-            if (!(leave.getEndDate().isBefore(start)
-                    || leave.getStartDate().isAfter(end))) {
-                count++;
-            }
-        }
-        return count;
+        return (int) approvedLeaves.stream()
+                .filter(l ->
+                        !l.getEndDate().isBefore(start)
+                                && !l.getStartDate().isAfter(end))
+                .count();
     }
 }

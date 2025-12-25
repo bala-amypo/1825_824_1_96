@@ -6,8 +6,7 @@ import com.example.demo.service.TeamCapacityConfigService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TeamCapacityConfigServiceImpl
-        implements TeamCapacityConfigService {
+public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService {
 
     private final TeamCapacityConfigRepository repo;
 
@@ -16,12 +15,24 @@ public class TeamCapacityConfigServiceImpl
     }
 
     @Override
-    public TeamCapacityConfig getRuleByTeam(String teamName) {
-        return repo.findByTeamName(teamName).orElse(null);
+    public TeamCapacityConfig createRule(TeamCapacityConfig rule) {
+        return repo.save(rule);
     }
 
     @Override
-    public TeamCapacityConfig save(TeamCapacityConfig config) {
-        return repo.save(config);
+    public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule) {
+        return repo.findById(id)
+                .map(existing -> {
+                    existing.setTeamName(rule.getTeamName());
+                    existing.setTotalHeadcount(rule.getTotalHeadcount());
+                    existing.setMinCapacityPercent(rule.getMinCapacityPercent());
+                    return repo.save(existing);
+                })
+                .orElse(null);
+    }
+
+    @Override
+    public TeamCapacityConfig getRuleByTeam(String teamName) {
+        return repo.findByTeamName(teamName);
     }
 }
