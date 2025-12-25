@@ -1,9 +1,12 @@
 package com.example.demo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import com.example.demo.model.UserAccount;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface UserAccountRepository extends JpaRepository<UserAccount, Long>{
+import java.util.Optional;
+
+public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
+
+    // ✅ REQUIRED BY TEST CASES
+    Optional<UserAccount> findByEmail(String email);
 }

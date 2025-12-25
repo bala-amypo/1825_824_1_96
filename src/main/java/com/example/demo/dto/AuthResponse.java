@@ -2,14 +2,23 @@ package com.example.demo.dto;
 
 public class AuthResponse {
 
+    private Long userId;
     private String token;
-    private String role;
 
     public AuthResponse() {}
 
-    public AuthResponse(String token, String role) {
+    public AuthResponse(Long userId, String token) {
+        this.userId = userId;
         this.token = token;
-        this.role = role;
+    }
+
+    // ✅ REQUIRED BY TEST
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getToken() {
@@ -18,13 +27,5 @@ public class AuthResponse {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }
