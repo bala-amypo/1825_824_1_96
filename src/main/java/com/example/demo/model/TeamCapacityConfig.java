@@ -13,8 +13,8 @@ public class TeamCapacityConfig {
 
     private int totalHeadcount;
 
-    // REQUIRED BY TESTS
-    private double maxLeavePercent;
+    // THIS IS THE ONLY PERCENT FIELD USED
+    private int minCapacityPercent;
 
     // ===== GETTERS & SETTERS =====
 
@@ -42,11 +42,11 @@ public class TeamCapacityConfig {
         this.totalHeadcount = totalHeadcount;
     }
 
-    public double getMaxLeavePercent() {
-        return maxLeavePercent;
+    public int getMinCapacityPercent() {
+        return minCapacityPercent;
     }
 
-    public void setMaxLeavePercent(double maxLeavePercent) {
-        this.maxLeavePercent = maxLeavePercent;
+    public void setMinCapacityPercent(int minCapacityPercent) {
+        this.minCapacityPercent = minCapacityPercent;
     }
 }
