@@ -6,7 +6,7 @@ public interface CapacityAnalysisService {
 
     boolean analyzeTeamCapacity(
             String teamName,
-            LocalDate startDate,
-            LocalDate endDate
+            LocalDate start,
+            LocalDate end
     );
 }
