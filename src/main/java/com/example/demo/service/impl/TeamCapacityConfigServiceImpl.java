@@ -16,27 +16,12 @@ public class TeamCapacityConfigServiceImpl
     }
 
     @Override
-    public TeamCapacityConfig createRule(TeamCapacityConfig rule) {
-        return repo.save(rule);
+    public TeamCapacityConfig getRuleByTeam(String teamName) {
+        return repo.findByTeamName(teamName).orElse(null);
     }
 
     @Override
-    public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule) {
-
-        TeamCapacityConfig existing = repo.findById(id).orElse(null);
-        if (existing == null) {
-            return null;
-        }
-
-        existing.setTeamName(rule.getTeamName());
-        existing.setTotalHeadcount(rule.getTotalHeadcount());
-        existing.setMaxLeavePercent(rule.getMaxLeavePercent());
-
-        return repo.save(existing);
-    }
-
-    @Override
-    public TeamCapacityConfig getRuleByTeam(String team) {
-        return repo.findByTeamName(team).orElse(null);
+    public TeamCapacityConfig save(TeamCapacityConfig config) {
+        return repo.save(config);
     }
 }

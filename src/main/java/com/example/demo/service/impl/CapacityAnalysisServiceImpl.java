@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.TeamCapacityConfig;
 import com.example.demo.model.LeaveRequest;
+import com.example.demo.model.TeamCapacityConfig;
 import com.example.demo.service.CapacityAnalysisService;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class CapacityAnalysisServiceImpl implements CapacityAnalysisService {
+public class CapacityAnalysisServiceImpl
+        implements CapacityAnalysisService {
 
     @Override
     public boolean isCapacityExceeded(
@@ -23,10 +24,13 @@ public class CapacityAnalysisServiceImpl implements CapacityAnalysisService {
 
         int minCapacityPercent = config.getMinCapacityPercent();
 
-        int maxAllowedLeaves =
-                teamSize - ((teamSize * minCapacityPercent) / 100);
+        int minRequiredEmployees =
+                (teamSize * minCapacityPercent) / 100;
 
-        return approvedLeaves.size() > maxAllowedLeaves;
+        int currentAvailable =
+                teamSize - approvedLeaves.size();
+
+        return currentAvailable < minRequiredEmployees;
     }
 
     @Override
@@ -35,11 +39,8 @@ public class CapacityAnalysisServiceImpl implements CapacityAnalysisService {
             LocalDate start,
             LocalDate end
     ) {
-        if (approvedLeaves == null || start == null || end == null) {
-            return 0;
-        }
-
         int count = 0;
+
         for (LeaveRequest leave : approvedLeaves) {
             if (!(leave.getEndDate().isBefore(start)
                     || leave.getStartDate().isAfter(end))) {
