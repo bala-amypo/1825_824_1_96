@@ -1,49 +1,72 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class CapacityAlert{
+public class CapacityAlert {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String teamName;
     private LocalDate date;
     private String severity;
     private String message;
-    
-    public Long getId(){
+
+    // ===== REQUIRED NO-ARGS CONSTRUCTOR =====
+    public CapacityAlert() {
+    }
+
+    // ===== REQUIRED 4-ARGS CONSTRUCTOR (USED IN TESTS) =====
+    public CapacityAlert(String teamName, LocalDate date,
+                         String severity, String message) {
+        this.teamName = teamName;
+        this.date = date;
+        this.severity = severity;
+        this.message = message;
+    }
+
+    // ===== GETTERS & SETTERS =====
+
+    public Long getId() {
         return id;
     }
-    public void setId(Long id){
-        this.id=id;
+
+    public void setId(Long id) {
+        this.id = id;
     }
-    public String getTeamName(){
+
+    public String getTeamName() {
         return teamName;
     }
-    public void setTeamName(String teamName){
-        this.teamName=teamName;
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
-    public LocalDate getDate(){
+
+    public LocalDate getDate() {
         return date;
     }
-    public void setDate(LocalDate date){
-        this.date=date;
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
-    public String getSeverity(){
+
+    public String getSeverity() {
         return severity;
     }
-    public void setSeverity(String severity){
-        this.severity=severity;
+
+    public void setSeverity(String severity) {
+        this.severity = severity;
     }
-    public String getMessage(){
+
+    public String getMessage() {
         return message;
     }
-    public void setMessage(String message){
-        this.message=message;
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

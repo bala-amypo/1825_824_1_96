@@ -1,11 +1,17 @@
 package com.example.demo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import com.example.demo.model.CapacityAlert;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.time.LocalDate;
 import java.util.List;
 
-@Repository
-public interface CapacityAlertRepository extends JpaRepository<CapacityAlert, Long>{
-    List<CapacityAlert> findByTeamName(String teamName);
+public interface CapacityAlertRepository extends JpaRepository<CapacityAlert, Long> {
+
+    // ===== REQUIRED BY TEST CASES =====
+    List<CapacityAlert> findByTeamNameAndDateBetween(
+            String teamName,
+            LocalDate startDate,
+            LocalDate endDate
+    );
 }
