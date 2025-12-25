@@ -6,15 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface CapacityAlertRepository extends JpaRepository<CapacityAlert, Long> {
+public interface CapacityAlertRepository
+        extends JpaRepository<CapacityAlert, Long> {
 
-    // Used in test cases
+    // Used by test cases
     List<CapacityAlert> findByTeamNameAndDateBetween(
             String teamName,
             LocalDate startDate,
             LocalDate endDate
     );
 
-    // Used in service implementation AND tests
+    // 🔥 MUST RETURN LIST (NOT Optional)
     List<CapacityAlert> findByTeamName(String teamName);
 }

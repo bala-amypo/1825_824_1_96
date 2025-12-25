@@ -18,7 +18,6 @@ public class CapacityAlertServiceImpl implements CapacityAlertService {
 
     @Override
     public List<CapacityAlert> getByTeam(String teamName) {
-        // ✅ repository already returns List
         return repo.findByTeamName(teamName);
     }
 
