@@ -3,35 +3,37 @@ package com.example.demo.service.impl;
 import com.example.demo.model.TeamCapacityConfig;
 import com.example.demo.repository.TeamCapacityConfigRepository;
 import com.example.demo.service.TeamCapacityConfigService;
+import org.springframework.stereotype.Service;
 
-public class TeamCapacityConfigServiceImpl
-        implements TeamCapacityConfigService {
+@Service
+public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService {
 
-    private final TeamCapacityConfigRepository repo;
+    private final TeamCapacityConfigRepository repository;
 
-    public TeamCapacityConfigServiceImpl(TeamCapacityConfigRepository repo) {
-        this.repo = repo;
+    // ✅ REQUIRED by tests
+    public TeamCapacityConfigServiceImpl(TeamCapacityConfigRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public TeamCapacityConfig createRule(TeamCapacityConfig rule) {
-        return repo.save(rule);
+        return repository.save(rule);
     }
 
     @Override
     public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule) {
-        TeamCapacityConfig existing = repo.findById(id).orElse(null);
-        if (existing == null) {
-            return null;
-        }
+        TeamCapacityConfig existing = repository.findById(id).orElse(null);
+        if (existing == null) return null;
+
         existing.setTeamName(rule.getTeamName());
-        existing.setMinCapacityPercent(rule.getMinCapacityPercent());
         existing.setTotalHeadcount(rule.getTotalHeadcount());
-        return repo.save(existing);
+        existing.setMinCapacityPercent(rule.getMinCapacityPercent());
+
+        return repository.save(existing);
     }
 
     @Override
-    public TeamCapacityConfig getRuleByTeam(String team) {
-        return repo.findByTeamName(team);
+    public TeamCapacityConfig getRuleByTeam(String teamName) {
+        return repository.findByTeamName(teamName);
     }
 }
