@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CapacityAlertServiceImpl implements CapacityAlertService {
+public class CapacityAlertServiceImpl
+        implements CapacityAlertService {
 
     private final CapacityAlertRepository repo;
 
@@ -17,12 +18,12 @@ public class CapacityAlertServiceImpl implements CapacityAlertService {
     }
 
     @Override
-    public List<CapacityAlert> getByTeam(String teamName) {
-        return repo.findByTeamName(teamName);
+    public CapacityAlert save(CapacityAlert alert) {
+        return repo.save(alert);
     }
 
     @Override
-    public CapacityAlert save(CapacityAlert alert) {
-        return repo.save(alert);
+    public List<CapacityAlert> getByTeam(String teamName) {
+        return repo.findByTeamName(teamName);
     }
 }

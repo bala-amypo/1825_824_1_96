@@ -1,43 +1,53 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.LeaveRequest;
 import com.example.demo.model.TeamCapacityConfig;
+import com.example.demo.repository.LeaveRequestRepository;
 import com.example.demo.service.CapacityAnalysisService;
+import com.example.demo.service.TeamCapacityConfigService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class CapacityAnalysisServiceImpl
         implements CapacityAnalysisService {
 
-    @Override
-    public boolean isCapacityExceeded(
-            TeamCapacityConfig config,
-            List<LeaveRequest> approvedLeaves,
-            int teamSize
-    ) {
-        if (config == null || teamSize == 0) {
-            return false;
-        }
+    private TeamCapacityConfigService configService;
+    private LeaveRequestRepository leaveRepo;
 
-        int maxAllowedLeaves =
-                (config.getMinCapacityPercent() * teamSize) / 100;
+    // REQUIRED BY TESTS
+    public CapacityAnalysisServiceImpl() {
+    }
 
-        return approvedLeaves.size() > maxAllowedLeaves;
+    // OPTIONAL FOR SPRING
+    public CapacityAnalysisServiceImpl(
+            TeamCapacityConfigService configService,
+            LeaveRequestRepository leaveRepo) {
+        this.configService = configService;
+        this.leaveRepo = leaveRepo;
     }
 
     @Override
-    public int calculateOverlapCount(
-            List<LeaveRequest> approvedLeaves,
-            LocalDate start,
-            LocalDate end
-    ) {
-        return (int) approvedLeaves.stream()
-                .filter(l ->
-                        !l.getEndDate().isBefore(start)
-                                && !l.getStartDate().isAfter(end))
-                .count();
+    public boolean analyzeTeamCapacity(
+            String teamName,
+            LocalDate startDate,
+            LocalDate endDate) {
+
+        TeamCapacityConfig config =
+                configService.getRuleByTeam(teamName);
+
+        if (config == null) return true;
+
+        int total = config.getTotalHeadcount();
+        int minPercent = config.getMinCapacityPercent();
+
+        int maxAllowedLeaves =
+                total - (total * minPercent / 100);
+
+        int approvedLeaves =
+                leaveRepo.findApprovedOverlappingForTeam(
+                        teamName, startDate, endDate).size();
+
+        return approvedLeaves <= maxAllowedLeaves;
     }
 }
