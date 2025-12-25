@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class TeamCapacityConfig {
@@ -13,45 +10,40 @@ public class TeamCapacityConfig {
     private Long id;
 
     private String teamName;
+    private int totalHeadcount;
+    private int minCapacityPercent;
 
-    private int maxLeavePercent;
-
-    // ---------- Constructors ----------
-
-    public TeamCapacityConfig() {
-    }
-
-    public TeamCapacityConfig(Long id, String teamName, int maxLeavePercent) {
-        this.id = id;
-        this.teamName = teamName;
-        this.maxLeavePercent = maxLeavePercent;
-    }
-
-    // ---------- Getters ----------
+    // ===== GETTERS & SETTERS REQUIRED BY TESTS =====
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTeamName() {
         return teamName;
     }
 
-    public int getMaxLeavePercent() {
-        return maxLeavePercent;
-    }
-
-    // ---------- Setters ----------
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
 
-    public void setMaxLeavePercent(int maxLeavePercent) {
-        this.maxLeavePercent = maxLeavePercent;
+    public int getTotalHeadcount() {
+        return totalHeadcount;
+    }
+
+    public void setTotalHeadcount(int totalHeadcount) {
+        this.totalHeadcount = totalHeadcount;
+    }
+
+    public int getMinCapacityPercent() {
+        return minCapacityPercent;
+    }
+
+    public void setMinCapacityPercent(int minCapacityPercent) {
+        this.minCapacityPercent = minCapacityPercent;
     }
 }
