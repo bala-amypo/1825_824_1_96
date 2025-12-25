@@ -9,13 +9,11 @@ import java.util.List;
 public interface CapacityAlertRepository
         extends JpaRepository<CapacityAlert, Long> {
 
-    // Used by test cases
     List<CapacityAlert> findByTeamNameAndDateBetween(
             String teamName,
             LocalDate startDate,
             LocalDate endDate
     );
 
-    // 🔥 MUST RETURN LIST (NOT Optional)
     List<CapacityAlert> findByTeamName(String teamName);
 }

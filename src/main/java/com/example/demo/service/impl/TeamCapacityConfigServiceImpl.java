@@ -23,10 +23,7 @@ public class TeamCapacityConfigServiceImpl
     @Override
     public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule) {
         TeamCapacityConfig existing = repo.findById(id).orElse(null);
-
-        if (existing == null) {
-            return null;
-        }
+        if (existing == null) return null;
 
         existing.setTeamName(rule.getTeamName());
         existing.setTotalHeadcount(rule.getTotalHeadcount());

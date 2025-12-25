@@ -10,40 +10,39 @@ public class TeamCapacityConfig {
     private Long id;
 
     private String teamName;
-
     private int totalHeadcount;
+    private int minCapacityPercent;   // TEST EXPECTS THIS
 
-    // THIS IS THE ONLY PERCENT FIELD USED
-    private int minCapacityPercent;
-
-    // ===== GETTERS & SETTERS =====
+    // ===== REQUIRED GETTERS =====
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTeamName() {
         return teamName;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
     public int getTotalHeadcount() {
         return totalHeadcount;
     }
 
-    public void setTotalHeadcount(int totalHeadcount) {
-        this.totalHeadcount = totalHeadcount;
-    }
-
     public int getMinCapacityPercent() {
         return minCapacityPercent;
+    }
+
+    // ===== REQUIRED SETTERS =====
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public void setTotalHeadcount(int totalHeadcount) {
+        this.totalHeadcount = totalHeadcount;
     }
 
     public void setMinCapacityPercent(int minCapacityPercent) {

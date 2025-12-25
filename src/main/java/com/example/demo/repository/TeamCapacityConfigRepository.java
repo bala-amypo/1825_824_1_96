@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TeamCapacityConfigRepository
         extends JpaRepository<TeamCapacityConfig, Long> {
 
-    // 🔥 MUST NOT RETURN Optional
     TeamCapacityConfig findByTeamName(String teamName);
 }
