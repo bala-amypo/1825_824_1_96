@@ -16,19 +16,12 @@ public class CapacityAlertServiceImpl implements CapacityAlertService {
         this.repo = repo;
     }
 
-    /**
-     * REQUIRED by CapacityAlertService
-     */
     @Override
     public List<CapacityAlert> getByTeam(String teamName) {
-        return repo.findByTeamName(teamName)
-                .map(List::of)
-                .orElse(List.of());
+        // ✅ repository already returns List
+        return repo.findByTeamName(teamName);
     }
 
-    /**
-     * REQUIRED by CapacityAlertService
-     */
     @Override
     public CapacityAlert save(CapacityAlert alert) {
         return repo.save(alert);
