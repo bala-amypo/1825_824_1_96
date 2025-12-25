@@ -1,6 +1,12 @@
+package com.example.demo.service;
+
+import com.example.demo.model.EmployeeProfile;
+
+import java.util.List;
+
 public interface EmployeeProfileService {
 
-    EmployeeProfile save(EmployeeProfile profile);
+    EmployeeProfile create(EmployeeProfile profile);
 
     EmployeeProfile update(Long id, EmployeeProfile profile);
 
@@ -8,5 +14,5 @@ public interface EmployeeProfileService {
 
     EmployeeProfile getById(Long id);
 
-    List<EmployeeProfile> getByTeam(String team);
+    List<EmployeeProfile> getByTeam(String teamName);
 }
