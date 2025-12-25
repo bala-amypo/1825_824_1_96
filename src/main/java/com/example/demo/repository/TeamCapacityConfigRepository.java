@@ -1,9 +1,10 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.TeamCapacityConfig;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TeamCapacityConfigRepository {
+public interface TeamCapacityConfigRepository
+        extends JpaRepository<TeamCapacityConfig, Long> {
 
-    // ❌ NO Optional
     TeamCapacityConfig findByTeamName(String teamName);
 }

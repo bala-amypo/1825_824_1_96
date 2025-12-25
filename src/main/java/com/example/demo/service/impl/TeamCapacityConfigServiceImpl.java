@@ -3,9 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.model.TeamCapacityConfig;
 import com.example.demo.repository.TeamCapacityConfigRepository;
 import com.example.demo.service.TeamCapacityConfigService;
-import org.springframework.stereotype.Service;
 
-@Service
 public class TeamCapacityConfigServiceImpl
         implements TeamCapacityConfigService {
 
@@ -23,17 +21,17 @@ public class TeamCapacityConfigServiceImpl
     @Override
     public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule) {
         TeamCapacityConfig existing = repo.findById(id).orElse(null);
-        if (existing == null) return null;
-
+        if (existing == null) {
+            return null;
+        }
         existing.setTeamName(rule.getTeamName());
-        existing.setTotalHeadcount(rule.getTotalHeadcount());
         existing.setMinCapacityPercent(rule.getMinCapacityPercent());
-
+        existing.setTotalHeadcount(rule.getTotalHeadcount());
         return repo.save(existing);
     }
 
     @Override
-    public TeamCapacityConfig getRuleByTeam(String teamName) {
-        return repo.findByTeamName(teamName);
+    public TeamCapacityConfig getRuleByTeam(String team) {
+        return repo.findByTeamName(team);
     }
 }

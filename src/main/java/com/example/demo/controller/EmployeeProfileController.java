@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.EmployeeProfile;
 import com.example.demo.service.EmployeeProfileService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,17 +10,22 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeProfileController {
 
-    @Autowired
-    private EmployeeProfileService service;
+    private final EmployeeProfileService service;
+
+    public EmployeeProfileController(EmployeeProfileService service) {
+        this.service = service;
+    }
 
     @PostMapping
-    public EmployeeProfile create(@RequestBody EmployeeProfile emp) {
-        return service.create(emp);
+    public EmployeeProfile create(@RequestBody EmployeeProfile employee) {
+        return service.create(employee);
     }
 
     @PutMapping("/{id}")
-    public EmployeeProfile update(@PathVariable Long id, @RequestBody EmployeeProfile emp) {
-        return service.update(id, emp);
+    public EmployeeProfile update(
+            @PathVariable Long id,
+            @RequestBody EmployeeProfile employee) {
+        return service.update(id, employee);
     }
 
     @DeleteMapping("/{id}")
