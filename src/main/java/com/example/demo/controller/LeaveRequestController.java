@@ -1,45 +1,38 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.LeaveRequest;
+import com.example.demo.dto.LeaveRequestDto;
 import com.example.demo.service.LeaveRequestService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/leaves")
 public class LeaveRequestController {
 
-    @Autowired
-    private LeaveRequestService service;
+    private final LeaveRequestService leaveService;
+
+    public LeaveRequestController(LeaveRequestService leaveService) {
+        this.leaveService = leaveService;
+    }
 
     @PostMapping
-    public LeaveRequest apply(@RequestBody LeaveRequest req) {
-        return service.create(req);
+    public LeaveRequestDto create(@RequestBody LeaveRequestDto dto) {
+        return leaveService.create(dto);
     }
 
-    @PutMapping("/{id}/approve")
-    public void approve(@PathVariable Long id) {
-        service.approve(id);
+    @PostMapping("/{id}/approve")
+    public LeaveRequestDto approve(@PathVariable Long id) {
+        return leaveService.approve(id);
     }
 
-    @PutMapping("/{id}/reject")
-    public void reject(@PathVariable Long id) {
-        service.reject(id);
+    @PostMapping("/{id}/reject")
+    public LeaveRequestDto reject(@PathVariable Long id) {
+        return leaveService.reject(id);
     }
 
-    @GetMapping("/employee/{id}")
-    public List<LeaveRequest> getByEmployee(@PathVariable Long id) {
-        return service.getByEmployee(id);
-    }
-
-    @GetMapping("/overlap")
-    public List<LeaveRequest> overlap(
-            @RequestParam String teamName,
-            @RequestParam LocalDate start,
-            @RequestParam LocalDate end) {
-        return service.getOverlappingForTeam(teamName, start, end);
+    @GetMapping("/employee/{employeeId}")
+    public List<LeaveRequestDto> getByEmployee(@PathVariable Long employeeId) {
+        return leaveService.getByEmployee(employeeId);
     }
 }

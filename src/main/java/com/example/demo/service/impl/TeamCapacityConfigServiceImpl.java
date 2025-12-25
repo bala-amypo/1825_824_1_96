@@ -27,7 +27,7 @@ public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService 
         }
 
         existing.setTeamName(rule.getTeamName());
-        existing.setMaxLeavePercent(rule.getMaxLeavePercent());
+        existing.setMinCapacityPercent(rule.getMinCapacityPercent());
 
         return repo.save(existing);
     }
