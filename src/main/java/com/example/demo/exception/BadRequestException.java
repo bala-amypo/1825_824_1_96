@@ -1,4 +1,8 @@
-package com.exmaple.demo.exception;
+package com.example.demo.exception;
 
-public class BadRequestException {
+public class BadRequestException extends RuntimeException {
+
+    public BadRequestException(String message) {
+        super(message);
+    }
 }
