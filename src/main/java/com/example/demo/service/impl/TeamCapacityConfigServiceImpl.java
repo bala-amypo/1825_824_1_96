@@ -6,7 +6,8 @@ import com.example.demo.service.TeamCapacityConfigService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService {
+public class TeamCapacityConfigServiceImpl
+        implements TeamCapacityConfigService {
 
     private final TeamCapacityConfigRepository repo;
 
@@ -22,15 +23,13 @@ public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService 
     @Override
     public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule) {
 
-        // FIX 1: Handle Optional properly
         TeamCapacityConfig existing = repo.findById(id).orElse(null);
-
         if (existing == null) {
             return null;
         }
 
-        // FIX 2: Use fields expected by tests
         existing.setTeamName(rule.getTeamName());
+        existing.setTotalHeadcount(rule.getTotalHeadcount());
         existing.setMaxLeavePercent(rule.getMaxLeavePercent());
 
         return repo.save(existing);
@@ -38,6 +37,6 @@ public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService 
 
     @Override
     public TeamCapacityConfig getRuleByTeam(String team) {
-        return repo.findByTeamName(team);
+        return repo.findByTeamName(team).orElse(null);
     }
 }
