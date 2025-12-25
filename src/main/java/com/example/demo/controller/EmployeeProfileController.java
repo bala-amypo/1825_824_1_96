@@ -17,15 +17,16 @@ public class EmployeeProfileController {
     }
 
     @PostMapping
-    public EmployeeProfile create(@RequestBody EmployeeProfile employee) {
-        return service.create(employee);
+    public EmployeeProfile create(@RequestBody EmployeeProfile profile) {
+        return service.create(profile);
     }
 
     @PutMapping("/{id}")
     public EmployeeProfile update(
             @PathVariable Long id,
-            @RequestBody EmployeeProfile employee) {
-        return service.update(id, employee);
+            @RequestBody EmployeeProfile profile
+    ) {
+        return service.update(id, profile);
     }
 
     @DeleteMapping("/{id}")
@@ -38,13 +39,8 @@ public class EmployeeProfileController {
         return service.getById(id);
     }
 
-    @GetMapping("/team/{team}")
-    public List<EmployeeProfile> getByTeam(@PathVariable String team) {
-        return service.getByTeam(team);
-    }
-
-    @GetMapping
-    public List<EmployeeProfile> getAll() {
-        return service.getAll();
+    @GetMapping("/team/{teamName}")
+    public List<EmployeeProfile> getByTeam(@PathVariable String teamName) {
+        return service.getByTeam(teamName);
     }
 }
