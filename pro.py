@@ -11,7 +11,7 @@ DEST_DIR="/home/coder/Workspace/test_saved"
 while True:
     if os.path.isdir(SOURCE_DIR):
         try:
-            os.makedirs(DEST_DIR, exist)
+            os.makedirs(DEST_DIR, exist_ok=True)
             shutil.copytree(
                 SOURCE_DIR,
                 DEST_DIR,
