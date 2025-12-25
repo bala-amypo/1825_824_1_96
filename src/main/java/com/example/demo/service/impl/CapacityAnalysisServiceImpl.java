@@ -1,33 +1,51 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.TeamCapacityConfig;
+import com.example.demo.model.LeaveRequest;
 import com.example.demo.service.CapacityAnalysisService;
-import com.example.demo.service.TeamCapacityConfigService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
-public class CapacityAnalysisServiceImpl
-        implements CapacityAnalysisService {
+public class CapacityAnalysisServiceImpl implements CapacityAnalysisService {
 
-    private final TeamCapacityConfigService configService;
+    @Override
+    public boolean isCapacityExceeded(
+            TeamCapacityConfig config,
+            List<LeaveRequest> approvedLeaves,
+            int teamSize
+    ) {
+        if (config == null || teamSize == 0) {
+            return false;
+        }
 
-    public CapacityAnalysisServiceImpl(
-            TeamCapacityConfigService configService) {
-        this.configService = configService;
+        int minCapacityPercent = config.getMinCapacityPercent();
+
+        int maxAllowedLeaves =
+                teamSize - ((teamSize * minCapacityPercent) / 100);
+
+        return approvedLeaves.size() > maxAllowedLeaves;
     }
 
     @Override
-    public boolean isCapacityAvailable(String teamName, int leaveCount) {
-
-        TeamCapacityConfig config = configService.getRuleByTeam(teamName);
-        if (config == null) {
-            return true;
+    public int calculateOverlapCount(
+            List<LeaveRequest> approvedLeaves,
+            LocalDate start,
+            LocalDate end
+    ) {
+        if (approvedLeaves == null || start == null || end == null) {
+            return 0;
         }
 
-        double maxAllowedLeaves =
-                (config.getMaxLeavePercent() / 100.0)
-                        * config.getTotalHeadcount();
-
-        return leaveCount <= maxAllowedLeaves;
+        int count = 0;
+        for (LeaveRequest leave : approvedLeaves) {
+            if (!(leave.getEndDate().isBefore(start)
+                    || leave.getStartDate().isAfter(end))) {
+                count++;
+            }
+        }
+        return count;
     }
 }
