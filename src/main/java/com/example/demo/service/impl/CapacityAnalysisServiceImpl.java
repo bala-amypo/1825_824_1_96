@@ -9,7 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class CapacityAnalysisServiceImpl implements CapacityAnalysisService {
+public class CapacityAnalysisServiceImpl
+        implements CapacityAnalysisService {
 
     @Override
     public boolean isCapacityExceeded(
