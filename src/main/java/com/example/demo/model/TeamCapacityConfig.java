@@ -10,10 +10,13 @@ public class TeamCapacityConfig {
     private Long id;
 
     private String teamName;
-    private int totalHeadcount;
-    private int minCapacityPercent;
 
-    // ===== GETTERS & SETTERS REQUIRED BY TESTS =====
+    private int totalHeadcount;
+
+    // REQUIRED BY TESTS
+    private double maxLeavePercent;
+
+    // ===== GETTERS & SETTERS =====
 
     public Long getId() {
         return id;
@@ -39,11 +42,11 @@ public class TeamCapacityConfig {
         this.totalHeadcount = totalHeadcount;
     }
 
-    public int getMinCapacityPercent() {
-        return minCapacityPercent;
+    public double getMaxLeavePercent() {
+        return maxLeavePercent;
     }
 
-    public void setMinCapacityPercent(int minCapacityPercent) {
-        this.minCapacityPercent = minCapacityPercent;
+    public void setMaxLeavePercent(double maxLeavePercent) {
+        this.maxLeavePercent = maxLeavePercent;
     }
 }
