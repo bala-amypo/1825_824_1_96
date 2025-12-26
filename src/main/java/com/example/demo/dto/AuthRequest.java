@@ -8,6 +8,16 @@ public class AuthRequest {
     public AuthRequest() {
     }
 
+    // === REQUIRED BY TESTS ===
+    public void setEmail(String email) {
+        this.username = email;
+    }
+
+    public String getEmail() {
+        return this.username;
+    }
+
+    // === USED BY SERVICE ===
     public String getUsername() {
         return username;
     }
