@@ -59,6 +59,11 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
         return leaveRepository.findApprovedOverlappingForTeam(teamName, startDate, endDate)
                 .stream().map(this::toDto).collect(Collectors.toList());
     }
+    @Override
+    public List<LeaveRequestDto> getApprovedByTeam(String teamName) {
+        return leaveRepository.findApprovedOverlappingForTeam(teamName, LocalDate.now(), LocalDate.now().plusDays(30))
+                .stream().map(this::toDto).collect(Collectors.toList());
+    }
     private LeaveRequestDto toDto(LeaveRequest entity) {
         LeaveRequestDto dto = new LeaveRequestDto();
         dto.setId(entity.getId());
