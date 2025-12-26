@@ -59,7 +59,10 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
     public List<EmployeeProfileDto> addColleagues(Long id, List<Long> colleagueIds) {
         EmployeeProfile employee = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
-        List<EmployeeProfile> colleagues = repository.findAllById(colleagueIds);
+        List<EmployeeProfile> colleagues = colleagueIds.stream()
+                .map(colleagueId -> repository.findById(colleagueId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Colleague not found")))
+                .collect(Collectors.toList());
         employee.getColleagues().addAll(colleagues);
         repository.save(employee);
         return colleagues.stream().map(this::toDto).collect(Collectors.toList());
