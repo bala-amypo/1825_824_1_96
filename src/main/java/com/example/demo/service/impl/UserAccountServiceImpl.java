@@ -1,22 +1,15 @@
 package com.example.demo.service.impl;
-
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-import java.util.List;
 import com.example.demo.model.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
-import com.example.demo.service.UserAccountService;
 
-@Service
-public class UserAccountServiceImpl implements UserAccountService{
-    @Autowired
-    private UserAccountRepository repo;
-    @Override
-    public UserAccount save(UserAccount user){
-        return repo.save(user);
+public class UserAccountServiceImpl {
+    private final UserAccountRepository repository;
+    
+    public UserAccountServiceImpl(UserAccountRepository repository) {
+        this.repository = repository;
     }
-    @Override
-    public List<UserAccount> getAll(){
-        return repo.findAll();
+    
+    public UserAccount save(UserAccount account) {
+        return repository.save(account);
     }
 }
