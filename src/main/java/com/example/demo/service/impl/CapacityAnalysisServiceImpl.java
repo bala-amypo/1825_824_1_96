@@ -1,52 +1,72 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.CapacityAnalysisResultDto;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.CapacityAlert;
 import com.example.demo.model.LeaveRequest;
 import com.example.demo.model.TeamCapacityConfig;
+import com.example.demo.repository.CapacityAlertRepository;
+import com.example.demo.repository.EmployeeProfileRepository;
+import com.example.demo.repository.LeaveRequestRepository;
+import com.example.demo.repository.TeamCapacityConfigRepository;
 import com.example.demo.service.CapacityAnalysisService;
-import org.springframework.stereotype.Service;
-
+import com.example.demo.util.DateRangeUtil;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Service
 public class CapacityAnalysisServiceImpl implements CapacityAnalysisService {
+    private final TeamCapacityConfigRepository capacityRepo;
+    private final EmployeeProfileRepository employeeRepo;
+    private final LeaveRequestRepository leaveRepo;
+    private final CapacityAlertRepository alertRepo;
 
-    // ✅ NO constructor args (tests expect this)
-    public CapacityAnalysisServiceImpl() {}
-
-    @Override
-    public boolean isCapacityExceeded(
-            TeamCapacityConfig config,
-            List<LeaveRequest> approvedLeaves,
-            int teamSize
-    ) {
-        if (config == null || teamSize == 0) {
-            return false;
-        }
-
-        int allowedMin =
-                (config.getMinCapacityPercent() * teamSize) / 100;
-
-        int available =
-                teamSize - approvedLeaves.size();
-
-        return available < allowedMin;
+    public CapacityAnalysisServiceImpl(TeamCapacityConfigRepository capacityRepo, 
+                                     EmployeeProfileRepository employeeRepo,
+                                     LeaveRequestRepository leaveRepo,
+                                     CapacityAlertRepository alertRepo) {
+        this.capacityRepo = capacityRepo;
+        this.employeeRepo = employeeRepo;
+        this.leaveRepo = leaveRepo;
+        this.alertRepo = alertRepo;
     }
 
     @Override
-    public int calculateOverlapCount(
-            List<LeaveRequest> approvedLeaves,
-            LocalDate start,
-            LocalDate end
-    ) {
-        int count = 0;
+    public CapacityAnalysisResultDto analyzeTeamCapacity(String teamName, LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new BadRequestException("Start date must be before or equal to end date");
+        }
 
-        for (LeaveRequest leave : approvedLeaves) {
-            if (!leave.getEndDate().isBefore(start)
-                    && !leave.getStartDate().isAfter(end)) {
-                count++;
+        TeamCapacityConfig config = capacityRepo.findByTeamName(teamName)
+                .orElseThrow(() -> new ResourceNotFoundException("Capacity config not found for team: " + teamName));
+
+        if (config.getTotalHeadcount() <= 0) {
+            throw new BadRequestException("Invalid total headcount for team: " + teamName);
+        }
+
+        List<LeaveRequest> overlappingLeaves = leaveRepo.findApprovedOverlappingForTeam(teamName, startDate, endDate);
+        
+        Map<LocalDate, Integer> capacityByDate = new HashMap<>();
+        List<LocalDate> dateRange = DateRangeUtil.daysBetween(startDate, endDate);
+        
+        boolean isRisky = false;
+        for (LocalDate date : dateRange) {
+            int leavesOnDate = overlappingLeaves.size(); // Simplified calculation
+            int availableCapacity = ((config.getTotalHeadcount() - leavesOnDate) * 100) / config.getTotalHeadcount();
+            capacityByDate.put(date, availableCapacity);
+            
+            if (availableCapacity < config.getMinCapacityPercent()) {
+                isRisky = true;
+                CapacityAlert alert = new CapacityAlert(teamName, date, "HIGH", "Capacity below threshold");
+                alertRepo.save(alert);
             }
         }
-        return count;
+
+        CapacityAnalysisResultDto result = new CapacityAnalysisResultDto();
+        result.setRisky(isRisky);
+        result.setCapacityByDate(capacityByDate);
+        return result;
     }
 }
