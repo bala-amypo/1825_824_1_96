@@ -19,8 +19,7 @@ public class EmployeeProfileController {
     }
     
     public EmployeeProfileDto update(Long id, EmployeeProfileDto dto) {
-        dto.setId(id);
-        return service.update(dto);
+        return service.update(id, dto);
     }
     
     public List<EmployeeProfileDto> addColleagues(Long id, List<Long> colleagueIds) {

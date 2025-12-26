@@ -8,4 +8,5 @@ public interface EmployeeProfileService {
     EmployeeProfileDto getById(Long id);
     List<EmployeeProfileDto> getByTeam(String teamName);
     List<EmployeeProfileDto> getAll();
+    List<EmployeeProfileDto> addColleagues(Long id, List<Long> colleagueIds);
 }

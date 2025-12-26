@@ -55,6 +55,15 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
     public List<EmployeeProfileDto> getAll() {
         return repository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
+    @Override
+    public List<EmployeeProfileDto> addColleagues(Long id, List<Long> colleagueIds) {
+        EmployeeProfile employee = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+        List<EmployeeProfile> colleagues = repository.findAllById(colleagueIds);
+        employee.getColleagues().addAll(colleagues);
+        repository.save(employee);
+        return colleagues.stream().map(this::toDto).collect(Collectors.toList());
+    }
     private EmployeeProfileDto toDto(EmployeeProfile entity) {
         EmployeeProfileDto dto = new EmployeeProfileDto();
         dto.setId(entity.getId());
