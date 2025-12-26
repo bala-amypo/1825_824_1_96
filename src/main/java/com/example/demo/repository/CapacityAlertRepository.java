@@ -7,4 +7,5 @@ import java.util.List;
 public interface CapacityAlertRepository {
     CapacityAlert save(CapacityAlert alert);
     List<CapacityAlert> findByTeamNameAndDateBetween(String teamName, LocalDate startDate, LocalDate endDate);
+    List<CapacityAlert> findByTeamName(String teamName);
 }

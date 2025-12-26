@@ -6,4 +6,5 @@ import java.util.Optional;
 public interface TeamCapacityConfigRepository {
     TeamCapacityConfig save(TeamCapacityConfig config);
     Optional<TeamCapacityConfig> findByTeamName(String teamName);
+    Optional<TeamCapacityConfig> findById(Long id);
 }
