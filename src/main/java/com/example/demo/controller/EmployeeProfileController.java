@@ -1,46 +1,29 @@
 package com.example.demo.controller;
-
-import com.example.demo.model.EmployeeProfile;
+import com.example.demo.dto.EmployeeProfileDto;
 import com.example.demo.service.EmployeeProfileService;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
-@RestController
-@RequestMapping("/employees")
 public class EmployeeProfileController {
-
     private final EmployeeProfileService service;
-
+    
     public EmployeeProfileController(EmployeeProfileService service) {
         this.service = service;
     }
-
-    @PostMapping
-    public EmployeeProfile create(@RequestBody EmployeeProfile profile) {
-        return service.create(profile);
+    
+    public EmployeeProfileDto create(EmployeeProfileDto dto) {
+        return service.create(dto);
     }
-
-    @PutMapping("/{id}")
-    public EmployeeProfile update(
-            @PathVariable Long id,
-            @RequestBody EmployeeProfile profile
-    ) {
-        return service.update(id, profile);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deactivate(@PathVariable Long id) {
-        service.deactivate(id);
-    }
-
-    @GetMapping("/{id}")
-    public EmployeeProfile getById(@PathVariable Long id) {
+    
+    public EmployeeProfileDto getById(Long id) {
         return service.getById(id);
     }
-
-    @GetMapping("/team/{teamName}")
-    public List<EmployeeProfile> getByTeam(@PathVariable String teamName) {
-        return service.getByTeam(teamName);
+    
+    public EmployeeProfileDto update(Long id, EmployeeProfileDto dto) {
+        dto.setId(id);
+        return service.update(dto);
+    }
+    
+    public List<EmployeeProfileDto> addColleagues(Long id, List<Long> colleagueIds) {
+        return service.addColleagues(id, colleagueIds);
     }
 }
