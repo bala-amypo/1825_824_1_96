@@ -10,4 +10,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class 
+public class AuthServiceImpl implements AuthService{
+    private final UserAccountRepository userAccountRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
+
+    public AuthServiceImpl(
+        UserAccountRepository userAccountRepository,
+        BCryptPasswordEncoder passwordEncoder,
+        Jwt
+    )
+}
