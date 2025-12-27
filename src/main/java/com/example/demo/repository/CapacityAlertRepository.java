@@ -1,9 +1,8 @@
 package com.example.demo.repository;
+
 import com.example.demo.model.CapacityAlert;
-import java.time.LocalDate;
-import java.util.List;
-public interface CapacityAlertRepository {
-    CapacityAlert save(CapacityAlert alert);
-    List<CapacityAlert> findByTeamNameAndDateBetween(String teamName, LocalDate startDate, LocalDate endDate);
-    List<CapacityAlert> findByTeamName(String teamName);
-}
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface Capacity
