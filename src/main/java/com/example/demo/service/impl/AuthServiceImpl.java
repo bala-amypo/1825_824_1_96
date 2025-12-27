@@ -27,6 +27,11 @@ public class AuthServiceImpl implements AuthService{
 
 @Override
 public AuthResponse authenicate(AuthRequest request){
-    UserAccount user=userAccountRepository.findByEmail(request.getEmail()).orElse
+    UserAccount user=userAccountRepository.findByEmail(request.getEmail()).orElse(()->new RuntimeException("User not found"));
+    if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
+        throw new RuntimeException("Invalid password");
+    }
+    String token=jwtTokenProvider.generateToken(user);
+    return new AuthResponse(user.getId(),token);
 }
 }
