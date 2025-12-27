@@ -1,7 +1,7 @@
 package com.example.demo.dto;
 
 public class AuthRequest {
-
+    private String 
     private String username;
     private String password;
 
