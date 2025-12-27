@@ -2,7 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.AuthResponse;
-import com.example.demo.exception
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.security.JwtTokenProvider;
@@ -28,9 +28,9 @@ public class AuthServiceImpl implements AuthService{
 
 @Override
 public AuthResponse authenticate(AuthRequest request){
-    UserAccount user=userAccountRepository.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException("User not found"));
+    UserAccount user=userAccountRepository.findByEmail(request.getEmail()).orElseThrow(()->new BadRequestException("User not found"));
     if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
-        throw new RuntimeException("Invalid password");
+        throw new BadRequestException("Invalid password");
     }
     String token=jwtTokenProvider.generateToken(user);
     return new AuthResponse(user.getId(),token);
