@@ -8,5 +8,4 @@ public interface CapacityAlertService {
 
     List<CapacityAlert> getAllAlerts();
 
-    CapacityAlert createAlert(CapacityAlert alert);
 }
