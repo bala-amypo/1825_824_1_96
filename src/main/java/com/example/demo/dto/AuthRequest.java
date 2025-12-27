@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
 public class AuthRequest {
-    private String 
     private String username;
     private String password;
 
@@ -9,6 +8,9 @@ public class AuthRequest {
     }
 
     // === REQUIRED BY TESTS ===
+    public String getEmail(){
+        return email;
+    }
     public void setEmail(String email) {
         this.username = email;
     }
