@@ -18,6 +18,15 @@ public class AuthServiceImpl implements AuthService{
     public AuthServiceImpl(
         UserAccountRepository userAccountRepository,
         BCryptPasswordEncoder passwordEncoder,
-        Jwt
-    )
+        JwtTokenProvider jwtTokenProvider
+)   {
+    this.userAccountRepository=userAccountRepository;
+    this.passwordEncoder=passwordEncoder;
+    this.jwtTokenProvider=jwtTokenProvider;
+}
+
+@Override
+public AuthResponse authenicate(AuthRequest request){
+    UserAccount user=userAccountRepository.findByEmail(request.getEmail()).orElse
+}
 }
