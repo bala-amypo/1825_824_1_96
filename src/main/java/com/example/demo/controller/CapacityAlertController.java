@@ -16,10 +16,8 @@ public class CapacityAlertController {
         this.capacityAlertService = capacityAlertService;
     }
 
-    @GetMapping("/team/{teamName}")
-    public List<CapacityAlert> getByTeam(
-            @PathVariable String teamName
-    ) {
-        return service.getByTeam(teamName);
+    @GetMapping
+    public List<CapacityAlert> getAllAlerts(){
+        return capacityAlertService.getAllAlerts();
     }
 }
