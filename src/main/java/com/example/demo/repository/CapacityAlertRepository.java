@@ -11,8 +11,8 @@ import java.util.List;
 public interface CapacityAlertRepository extends JpaRepository<CapacityAlert, Long>{
 
     List<CapacityAlert> findByTeamNameAndDateBetween(
-        String teamName;
-        LocalDate startDate;
-        LocalDate endDate;
+        String teamName,
+        LocalDate startDate,
+        LocalDate endDate
     );
 }
