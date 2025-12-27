@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CapacityAlertService {
 
-    List<CapacityAlert> getByTeam(String teamName);
+    List<CapacityAlert> getAllAlerts();
 
-    CapacityAlert save(CapacityAlert alert);
+    CapacityAlert createAlert(CapacityAlert alert);
 }

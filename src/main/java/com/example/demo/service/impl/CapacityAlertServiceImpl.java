@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 import com.example.demo.model.CapacityAlert;
 import com.example.demo.repository.CapacityAlertRepository;
+import com.example.demo.service.Capacity
 
 public class CapacityAlertServiceImpl {
     private final CapacityAlertRepository repository;
