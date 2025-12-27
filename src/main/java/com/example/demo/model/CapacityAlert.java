@@ -21,6 +21,12 @@ public class CapacityAlert{
 
     public CapacityAlert(){
     }
+    public CapacityAlert(String teamName, LocalDate date, String severity, String message){
+        this.teamName=teamName;
+        this.date=date;
+        this.severity=sevrity;
+        this.message=message;
+    }
     public Long getId() {return id; }
     public void setId(Long id) {this.id=id; }
 
