@@ -14,5 +14,11 @@ public class CapacityAlertServiceImpl implements CapacityAlertService{
         this.capacityAlertRepository=capacityAlertRepository;
     }
     @Override
-    public CapacityAL
+    public CapacityAlert createAlert(capacityAlert alert){
+        return capacityAlertRepository.save(alert);
+    }
+    @Override
+    public List<CapacityAlert> getAllAlerts(){
+        return capacityAlertRepository.findAll();
+    }
 }

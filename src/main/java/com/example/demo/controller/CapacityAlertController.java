@@ -10,10 +10,10 @@ import java.util.List;
 @RequestMapping("/capacity-alerts")
 public class CapacityAlertController {
 
-    private final CapacityAlertService service;
+    private final CapacityAlertService capacityAlertService;
 
-    public CapacityAlertController(CapacityAlertService service) {
-        this.service = service;
+    public CapacityAlertController(CapacityAlertService capacityAlertService) {
+        this.capacityAlertService = capacityAlertService;
     }
 
     @GetMapping("/team/{teamName}")
