@@ -12,9 +12,11 @@ public class UserAccount {
 
     private String email;
     private String password;
-
-    // ✅ ADD THIS
     private String role;
+
+    // ✅ REQUIRED BY TESTS
+    @OneToOne(cascade = CascadeType.ALL)
+    private EmployeeProfile employeeProfile;
 
     // getters & setters
     public Long getId() {
@@ -41,12 +43,20 @@ public class UserAccount {
         this.password = password;
     }
 
-    // ✅ REQUIRED BY JwtTokenProvider
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    // ✅ REQUIRED BY TESTS
+    public EmployeeProfile getEmployeeProfile() {
+        return employeeProfile;
+    }
+
+    public void setEmployeeProfile(EmployeeProfile employeeProfile) {
+        this.employeeProfile = employeeProfile;
     }
 }
