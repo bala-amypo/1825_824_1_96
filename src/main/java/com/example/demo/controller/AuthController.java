@@ -11,7 +11,6 @@ public class AuthController {
 
     private final AuthService authService;
 
-    // Constructor injection (BEST PRACTICE)
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
