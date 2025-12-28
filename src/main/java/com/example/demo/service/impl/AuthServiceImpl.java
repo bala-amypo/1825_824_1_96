@@ -12,32 +12,42 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final UserAccountRepository userRepo;
+    private final UserAccountRepository userAccountRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthServiceImpl(UserAccountRepository userRepo,
+    // ✅ Constructor injection (Spring + Tests friendly)
+    public AuthServiceImpl(UserAccountRepository userAccountRepository,
                            BCryptPasswordEncoder passwordEncoder,
                            JwtTokenProvider jwtTokenProvider) {
-        this.userRepo = userRepo;
+        this.userAccountRepository = userAccountRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    // ✅ MUST MATCH AuthService INTERFACE EXACTLY
     @Override
     public AuthResponse authenticate(AuthRequest request) {
 
-        UserAccount user = userRepo.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        // 1️⃣ Fetch user by email
+        UserAccount user = userAccountRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
+        // 2️⃣ Validate password
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new RuntimeException("Invalid email or password");
         }
 
-        String token = (jwtTokenProvider != null)
-                ? jwtTokenProvider.generateToken(user)
-                : "TEST_TOKEN";
+        // 3️⃣ Generate JWT token
+        String token = jwtTokenProvider.generateToken(user);
 
-        return new AuthResponse(token);
+        // 4️⃣ Return AuthResponse (TEST EXPECTS userId)
+        return new AuthResponse(
+                user.getId(),        // ✅ REQUIRED by test: getUserId()
+                token,
+                user.getEmail(),
+                user.getRole()
+        );
     }
 }
