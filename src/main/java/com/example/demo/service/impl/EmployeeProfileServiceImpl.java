@@ -36,15 +36,9 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
         EmployeeProfile entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
-        if (dto.getFullName() != null) {
-            entity.setFullName(dto.getFullName());
-        }
-        if (dto.getTeamName() != null) {
-            entity.setTeamName(dto.getTeamName());
-        }
-        if (dto.getRole() != null) {
-            entity.setRole(dto.getRole());
-        }
+        if (dto.getFullName() != null) entity.setFullName(dto.getFullName());
+        if (dto.getTeamName() != null) entity.setTeamName(dto.getTeamName());
+        if (dto.getRole() != null) entity.setRole(dto.getRole());
 
         EmployeeProfile saved = repository.save(entity);
         return toDto(saved);
@@ -84,7 +78,7 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
     }
 
     /**
-     * ✅ FIXED METHOD — NO DUPLICATE COLLEAGUES
+     * ✅ FINAL FIX — NO DUPLICATES + RETURNS ALL COLLEAGUES
      */
     @Override
     public List<EmployeeProfileDto> addColleagues(Long id, List<Long> colleagueIds) {
@@ -95,13 +89,14 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
         List<EmployeeProfile> newColleagues = colleagueIds.stream()
                 .map(colleagueId -> repository.findById(colleagueId)
                         .orElseThrow(() -> new ResourceNotFoundException("Colleague not found")))
-                .filter(colleague -> !employee.getColleagues().contains(colleague)) // ⭐ KEY FIX
+                .filter(colleague -> !employee.getColleagues().contains(colleague)) // prevent duplicates
                 .collect(Collectors.toList());
 
         employee.getColleagues().addAll(newColleagues);
         repository.save(employee);
 
-        return newColleagues.stream()
+        // 🔥 RETURN ALL COLLEAGUES (this fixes the last failing test)
+        return employee.getColleagues().stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
