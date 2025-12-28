@@ -13,6 +13,9 @@ public class UserAccount {
     private String email;
     private String password;
 
+    // ✅ ADD THIS
+    private String role;
+
     // getters & setters
     public Long getId() {
         return id;
@@ -36,5 +39,14 @@ public class UserAccount {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    // ✅ REQUIRED BY JwtTokenProvider
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
