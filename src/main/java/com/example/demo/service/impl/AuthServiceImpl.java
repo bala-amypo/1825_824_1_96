@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.AuthRequest;
+import com.example.demo.dto.AuthResponse;
 import com.example.demo.model.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.security.JwtTokenProvider;
@@ -15,7 +16,6 @@ public class AuthServiceImpl implements AuthService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    // ✅ Constructor used by Spring + Tests
     public AuthServiceImpl(UserAccountRepository userRepo,
                            BCryptPasswordEncoder passwordEncoder,
                            JwtTokenProvider jwtTokenProvider) {
@@ -24,24 +24,20 @@ public class AuthServiceImpl implements AuthService {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    // ✅ This EXACT method signature must match AuthService
     @Override
-    public String authenticate(AuthRequest request) {
+    public AuthResponse authenticate(AuthRequest request) {
 
-        // 1️⃣ Fetch user
         UserAccount user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // 2️⃣ Verify password
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
-        // 3️⃣ Generate JWT (or dummy token for tests)
-        if (jwtTokenProvider != null) {
-            return jwtTokenProvider.generateToken(user);
-        }
+        String token = (jwtTokenProvider != null)
+                ? jwtTokenProvider.generateToken(user)
+                : "TEST_TOKEN";
 
-        return "TEST_TOKEN";
+        return new AuthResponse(token);
     }
 }
