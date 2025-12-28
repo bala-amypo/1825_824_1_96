@@ -15,7 +15,7 @@ public class AuthServiceImpl implements AuthService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    // Used by Spring (Swagger / runtime)
+    // ✅ Constructor used by Spring + Tests
     public AuthServiceImpl(UserAccountRepository userRepo,
                            BCryptPasswordEncoder passwordEncoder,
                            JwtTokenProvider jwtTokenProvider) {
@@ -24,32 +24,24 @@ public class AuthServiceImpl implements AuthService {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    // Used by tests
-    public AuthServiceImpl(UserAccountRepository userRepo,
-                           BCryptPasswordEncoder passwordEncoder) {
-        this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = null;
-    }
-
-    // ✅ THIS METHOD FIXES BOTH ERRORS
+    // ✅ This EXACT method signature must match AuthService
     @Override
     public String authenticate(AuthRequest request) {
 
-        // Minimal safe logic for tests & Swagger
+        // 1️⃣ Fetch user
         UserAccount user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // 2️⃣ Verify password
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
-        // If JWT is available → generate token
+        // 3️⃣ Generate JWT (or dummy token for tests)
         if (jwtTokenProvider != null) {
-            return jwtTokenProvider.generateToken(user.getEmail());
+            return jwtTokenProvider.generateToken(user);
         }
 
-        // For tests (JWT not required)
         return "TEST_TOKEN";
     }
 }
