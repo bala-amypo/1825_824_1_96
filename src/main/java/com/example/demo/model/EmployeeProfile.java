@@ -1,106 +1,74 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "employee_profile")
 public class EmployeeProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ✅ REQUIRED BY SERVICE & TESTS
-    @Column(unique = true, nullable = false)
     private String employeeId;
-
     private String fullName;
-
-    @Column(unique = true, nullable = false)
     private String email;
-
     private String teamName;
-
     private String role;
-
     private boolean active = true;
 
-    // ✅ REQUIRED BY getColleagues()
     @ManyToMany
     @JoinTable(
         name = "employee_colleagues",
         joinColumns = @JoinColumn(name = "employee_id"),
         inverseJoinColumns = @JoinColumn(name = "colleague_id")
     )
-    private List<EmployeeProfile> colleagues = new ArrayList<>();
+    private Set<EmployeeProfile> colleagues = new HashSet<>();
 
-    // =====================
-    // GETTERS & SETTERS
-    // =====================
+    // ===== getters & setters =====
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getEmployeeId() { return employeeId; }
+    public void setEmployeeId(String employeeId) { this.employeeId = employeeId; }
 
-    public String getEmployeeId() {
-        return employeeId;
-    }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getFullName() {
-        return fullName;
-    }
+    public String getTeamName() { return teamName; }
+    public void setTeamName(String teamName) { this.teamName = teamName; }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 
-    public String getEmail() {
-        return email;
-    }
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public List<EmployeeProfile> getColleagues() {
+    public Set<EmployeeProfile> getColleagues() {
         return colleagues;
     }
 
-    public void setColleagues(List<EmployeeProfile> colleagues) {
+    public void setColleagues(Set<EmployeeProfile> colleagues) {
         this.colleagues = colleagues;
+    }
+
+    // ===== 🔥 CRITICAL FIX =====
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmployeeProfile)) return false;
+        EmployeeProfile that = (EmployeeProfile) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
