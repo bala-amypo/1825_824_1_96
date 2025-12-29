@@ -14,6 +14,9 @@ public class TeamCapacityConfig {
     private String teamName;
 
     @Column(nullable = false)
+    private int totalHead
+
+    @Column(nullable = false)
     private int maxCapacity;
 
     public TeamCapacityConfig() {}
