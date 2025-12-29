@@ -31,5 +31,18 @@ public class JwtTokenProvider{
                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
                .compact();
     }
-    5
+    private Claims getClaims(String token){
+        return Jwts.parserBuilder()
+               .setSigningKey(getSigningKey())
+               .build()
+               .parseClaimsJws(token)
+               .getBody();
+    }
+    public String getEmail(String token){
+        return getClaims(token).getSubject();
+    }
+    public String getRole(String token){
+        Object role = getClaims(token).get("role");
+        return role !=
+    }
 }
