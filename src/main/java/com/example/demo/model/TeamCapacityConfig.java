@@ -54,7 +54,9 @@ public class TeamCapacityConfig {
     public void setTotalHeadcount(int totalHeadcount){
         this.totalHeadcount=totalHeadcount;
     }
-    public void 
+    public void setMinCapacityPercent(int minCapacityPercent){
+        this.minCapacityPercent=minCapacityPercent;
+    }
     public void setMaxCapacity(int maxCapacity){
         this.maxCapacity=maxCapacity;
     }
