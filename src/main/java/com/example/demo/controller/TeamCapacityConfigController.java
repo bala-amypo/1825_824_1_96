@@ -17,8 +17,13 @@ public class TeamCapacityConfigController{
     }
     @PostMapping
     public ResponseEntity<TeamCapacityConfig> create(@RequestBody TeamCapacityConfig config){
-        return 
+        return ResponseEntity.ok(service.create(config));
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamCapacityConfig> update(@PathVariable Long id, @RequestBody TeamCapacityConfig config){
+        return ResponseEntity.ok(service.update(id, config));
+    }
+    @GetMapping("/{}")
 }
 
 
