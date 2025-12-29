@@ -15,28 +15,29 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserAccountRepository userRepo;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider tokenProvider;
 
     public AuthServiceImpl(UserAccountRepository userRepo,
                            BCryptPasswordEncoder passwordEncoder,
-                           JwtTokenProvider jwtTokenProvider) {
+                           JwtTokenProvider tokenProvider) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
+        this.tokenProvider = tokenProvider;
     }
 
     @Override
     public AuthResponse authenticate(AuthRequest request) {
 
         UserAccount user = userRepo.findByEmail(request.getEmail())
-                .orElseThrow(() ->
-                        new BadRequestException("Invalid email or password"));
+                .orElseThrow(() -> new BadRequestException("Invalid email or password"));
 
+        // ✅ REQUIRED by tests
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadRequestException("Invalid email or password");
         }
 
-        String token = jwtTokenProvider.generateToken((String) user.getEmail());
+        // ✅ REQUIRED by tests
+        String token = tokenProvider.generateToken(user);
 
         return new AuthResponse(
                 user.getId(),
