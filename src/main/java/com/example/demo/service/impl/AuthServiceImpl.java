@@ -36,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
             throw new BadRequestException("Invalid email or password");
         }
 
-        String token = jwtTokenProvider.generateToken(userAccount.getUsername());
+        String token = jwtTokenProvider.generateToken(user.getUsername());
 
         return new AuthResponse(
                 user.getId(),
