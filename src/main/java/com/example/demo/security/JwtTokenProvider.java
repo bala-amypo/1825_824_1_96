@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -22,12 +23,13 @@ public class JwtTokenProvider{
     private Key getSigningKey(){
         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
-    public String generateToken(String username){
+    public String generateToken(String email){
         return Jwts.builder()
-               .setSubject(username)
+               .setSubject(email)
                .setIssuedAt(new Date())
                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
                .compact();
     }
+    5
 }
