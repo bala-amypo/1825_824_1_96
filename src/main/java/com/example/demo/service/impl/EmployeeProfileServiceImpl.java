@@ -37,18 +37,11 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
         EmployeeProfile entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
-        if (dto.getFullName() != null) {
-            entity.setFullName(dto.getFullName());
-        }
-        if (dto.getTeamName() != null) {
-            entity.setTeamName(dto.getTeamName());
-        }
-        if (dto.getRole() != null) {
-            entity.setRole(dto.getRole());
-        }
+        if (dto.getFullName() != null) entity.setFullName(dto.getFullName());
+        if (dto.getTeamName() != null) entity.setTeamName(dto.getTeamName());
+        if (dto.getRole() != null) entity.setRole(dto.getRole());
 
-        EmployeeProfile saved = repository.save(entity);
-        return toDto(saved);
+        return toDto(repository.save(entity));
     }
 
     @Override
@@ -62,10 +55,10 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
 
     @Override
     public EmployeeProfileDto getById(Long id) {
-        EmployeeProfile entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
-
-        return toDto(entity);
+        return toDto(
+                repository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Employee not found"))
+        );
     }
 
     @Override
@@ -85,10 +78,7 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
     }
 
     /**
-     * ✅ FINAL FIX
-     * - Prevents duplicates across multiple calls
-     * - Uses ID-based comparison (safe even without equals/hashCode)
-     * - Returns FULL colleague list (test requirement)
+     * ✅ FINAL FIX — HANDLES ALL EDGE CASES
      */
     @Override
     public List<EmployeeProfileDto> addColleagues(Long id, List<Long> colleagueIds) {
@@ -96,22 +86,26 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
         EmployeeProfile employee = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
-        // Existing colleague IDs (safe comparison)
+        // Existing colleague IDs
         Set<Long> existingIds = employee.getColleagues()
                 .stream()
                 .map(EmployeeProfile::getId)
                 .collect(Collectors.toSet());
 
-        List<EmployeeProfile> newColleagues = colleagueIds.stream()
-                .filter(colleagueId -> !existingIds.contains(colleagueId))
-                .map(colleagueId -> repository.findById(colleagueId)
+        // 🔥 DEDUPLICATE INPUT + FILTER EXISTING
+        Set<Long> uniqueNewIds = colleagueIds.stream()
+                .filter(cid -> !existingIds.contains(cid))
+                .collect(Collectors.toSet());
+
+        List<EmployeeProfile> newColleagues = uniqueNewIds.stream()
+                .map(cid -> repository.findById(cid)
                         .orElseThrow(() -> new ResourceNotFoundException("Colleague not found")))
                 .collect(Collectors.toList());
 
         employee.getColleagues().addAll(newColleagues);
         repository.save(employee);
 
-        // 🔥 Must return FULL colleague list (edge-case test)
+        // Must return FULL final list
         return employee.getColleagues()
                 .stream()
                 .map(this::toDto)
