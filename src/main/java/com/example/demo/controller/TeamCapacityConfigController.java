@@ -1,11 +1,12 @@
 package com.example.demo.controller;
 
-import java.lang.IllegalArguementException;
 import com.example.demo.model.TeamCapacityConfig;
 import com.example.demo.service.TeamCapacityConfigService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
+
 
 @RestController
 @RequestMapping("/capacity-config")
@@ -19,7 +20,7 @@ public class TeamCapacityConfigController{
     @PostMapping
     public ResponseEntity<TeamCapacityConfig> create(@RequestBody TeamCapacityConfig config){
         if(config.getTotalHeadcount()<=0){
-           throw new IllegalArguementException("totalHeadcount must be > 0");
+           throw new ResponseStatusException(HttpStatus.B"totalHeadcount must be > 0");
         }
         if(config.getMinCapacityPercent()<=0 || config.getMinCapacityPercent()>100){
            throw new IllegalArguementException("minCapacityPercent must be between 1 and 100");
