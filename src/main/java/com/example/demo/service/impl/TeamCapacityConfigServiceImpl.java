@@ -24,11 +24,16 @@ public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService 
     public TeamCapacityConfig update(Long id, TeamCapacityConfig config) {
         TeamCapacityConfig existing = repository.findById(id).orElseThrow(()->new RuntimeException("Capacity config not found"));
         existing.setTeamName(config.getTeamName());
-        existing.setMaxCapacity(config)
+        existing.setMaxCapacity(config.getMaxCapacity());
+        return repository.save(existing);
     }
 
     @Override
-    public TeamCapacityConfig getRuleByTeam(String teamName) {
-        return repository.findByTeamName(teamName).orElse(null);
+    public TeamCapacityConfig getByTeamName(String teamName) {
+        return repository.findByTeamName(teamName).orElseThrow(()->new RuntimeException("Team not found"));
+    }
+    @Override
+    public List<TeamCapacityConfig> getAll(){
+        return repository.findAll();
     }
 }
