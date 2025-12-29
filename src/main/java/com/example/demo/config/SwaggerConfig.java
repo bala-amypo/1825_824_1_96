@@ -23,7 +23,14 @@ public class SwaggerConfig{
                        )
                        .components(
                              new Components()
-                                     .add
-                       )
+                                     .addSecuritySchemes(
+                                            securitySchemeName,
+                                            new SecurityScheme()
+                                            .name("Authorization")
+                                            .type(SecurityScheme.Type.HTTP)
+                                            .scheme("bearer")
+                                            .bearerFormat("JWT")
+                                     )
+                       );
         }
 }
