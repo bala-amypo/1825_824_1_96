@@ -32,6 +32,10 @@ public class JwtTokenProvider{
                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
                .compact();
     }
+    public String generateToken(UserAccount user){
+        return Jwts.builder()
+               .setSubject(user.getEmail())
+    }
     private Claims getClaims(String token){
         return Jwts.parserBuilder()
                .setSigningKey(getSigningKey())
