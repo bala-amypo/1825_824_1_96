@@ -7,6 +7,7 @@ import com.example.demo.repository.EmployeeProfileRepository;
 import com.example.demo.service.EmployeeProfileService;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EmployeeProfileServiceImpl implements EmployeeProfileService {
@@ -36,9 +37,15 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
         EmployeeProfile entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
-        if (dto.getFullName() != null) entity.setFullName(dto.getFullName());
-        if (dto.getTeamName() != null) entity.setTeamName(dto.getTeamName());
-        if (dto.getRole() != null) entity.setRole(dto.getRole());
+        if (dto.getFullName() != null) {
+            entity.setFullName(dto.getFullName());
+        }
+        if (dto.getTeamName() != null) {
+            entity.setTeamName(dto.getTeamName());
+        }
+        if (dto.getRole() != null) {
+            entity.setRole(dto.getRole());
+        }
 
         EmployeeProfile saved = repository.save(entity);
         return toDto(saved);
@@ -78,7 +85,10 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
     }
 
     /**
-     * ✅ FINAL FIX — NO DUPLICATES + RETURNS ALL COLLEAGUES
+     * ✅ FINAL FIX
+     * - Prevents duplicates across multiple calls
+     * - Uses ID-based comparison (safe even without equals/hashCode)
+     * - Returns FULL colleague list (test requirement)
      */
     @Override
     public List<EmployeeProfileDto> addColleagues(Long id, List<Long> colleagueIds) {
@@ -86,17 +96,24 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
         EmployeeProfile employee = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
+        // Existing colleague IDs (safe comparison)
+        Set<Long> existingIds = employee.getColleagues()
+                .stream()
+                .map(EmployeeProfile::getId)
+                .collect(Collectors.toSet());
+
         List<EmployeeProfile> newColleagues = colleagueIds.stream()
+                .filter(colleagueId -> !existingIds.contains(colleagueId))
                 .map(colleagueId -> repository.findById(colleagueId)
                         .orElseThrow(() -> new ResourceNotFoundException("Colleague not found")))
-                .filter(colleague -> !employee.getColleagues().contains(colleague)) // prevent duplicates
                 .collect(Collectors.toList());
 
         employee.getColleagues().addAll(newColleagues);
         repository.save(employee);
 
-        // 🔥 RETURN ALL COLLEAGUES (this fixes the last failing test)
-        return employee.getColleagues().stream()
+        // 🔥 Must return FULL colleague list (edge-case test)
+        return employee.getColleagues()
+                .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
