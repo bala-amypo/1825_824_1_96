@@ -17,9 +17,10 @@ public class TeamCapacityConfigController{
     }
     @PostMapping
     public ResponseEntity<TeamCapacityConfig> create(@RequestBody TeamCapacityConfig config){
-        if(config.getTeamName()==null){
-           throw new IllegalArguementException("teamName is required")
+        if(config.getTotalHeadcount()<=0){
+           throw new IllegalArguementException("totalHeadcount must be > 0");
         }
+        if(config)
         return ResponseEntity.ok(service.create(config));
     }
     @PutMapping("/{id}")
