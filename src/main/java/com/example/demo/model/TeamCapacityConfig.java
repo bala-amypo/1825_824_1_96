@@ -36,8 +36,11 @@ public class TeamCapacityConfig {
     public String getTeamName(){
         return teamName;
     }
-    public int totalHeadcount(){
+    public int getTotalHeadcount(){
         return totalHeadcount;
+    }
+    public int getMinCapacityPercent(){
+        return minCapacityPercent;
     }
     public int getMaxCapacity(){
         return maxCapacity;
@@ -48,6 +51,10 @@ public class TeamCapacityConfig {
     public void setTeamName(String teamName){
         this.teamName=teamName;
     }
+    public void setTotalHeadcount(int totalHeadcount){
+        this.totalHeadcount=totalHeadcount;
+    }
+    public void 
     public void setMaxCapacity(int maxCapacity){
         this.maxCapacity=maxCapacity;
     }
