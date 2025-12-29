@@ -13,43 +13,17 @@ public class TeamCapacityConfig {
     @Column(nullable = false, unique = true)
     private String teamName;
 
-    private int totalHeadcount;
+    @Column(nullable = false)
+    private int maxCapacity;
 
-    private int minCapacityPercent;
-
-    // ===== Default constructor (MANDATORY for JPA) =====
     public TeamCapacityConfig() {}
 
-    // ===== Getters & Setters =====
-    public Long getId() {
+    public TeamCapacityConfig(String teamName, int maxCapacity){
+        this.teamName=teamName;
+        this.maxCapacity=maxCapacity;
+    }
+    public Long getId(){
         return id;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public int getTotalHeadcount() {
-        return totalHeadcount;
-    }
-
-    public void setTotalHeadcount(int totalHeadcount) {
-        this.totalHeadcount = totalHeadcount;
-    }
-
-    public int getMinCapacityPercent() {
-        return minCapacityPercent;
-    }
-
-    public void setMinCapacityPercent(int minCapacityPercent) {
-        this.minCapacityPercent = minCapacityPercent;
-    }
+    
 }
