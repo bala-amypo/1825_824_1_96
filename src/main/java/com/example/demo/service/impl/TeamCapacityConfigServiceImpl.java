@@ -21,9 +21,10 @@ public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService 
     }
 
     @Override
-    public TeamCapacityConfig updateRule(Long id, TeamCapacityConfig rule) {
-        rule.setId(id);
-        return repository.save(rule);
+    public TeamCapacityConfig update(Long id, TeamCapacityConfig config) {
+        TeamCapacityConfig existing = repository.findById(id).orElseThrow(()->new RuntimeException("Capacity config not found"));
+        existing.setTeamName(config.getTeamName());
+        existing.setMaxCapacity(config)
     }
 
     @Override
