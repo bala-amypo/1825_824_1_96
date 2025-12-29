@@ -35,6 +35,12 @@ public class JwtTokenProvider{
     public String generateToken(UserAccount user){
         return Jwts.builder()
                .setSubject(user.getEmail())
+               .claim("userId", user.getId())
+               .claim("role", user.getRole())
+               .setIssuedAt(new Date())
+               .setExpiration(new Date(System.currentTimeMillis()+jwtExpiration))
+               .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+               .compact();
     }
     private Claims getClaims(String token){
         return Jwts.parserBuilder()
