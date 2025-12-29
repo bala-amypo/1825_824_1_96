@@ -20,16 +20,16 @@ public class TeamCapacityConfigController{
     @PostMapping
     public ResponseEntity<TeamCapacityConfig> create(@RequestBody TeamCapacityConfig config){
         if(config.getTotalHeadcount()<=0){
-           throw new ResponseStatusException(HttpStatus.B"totalHeadcount must be > 0");
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "totalHeadcount must be > 0");
         }
         if(config.getMinCapacityPercent()<=0 || config.getMinCapacityPercent()>100){
-           throw new IllegalArguementException("minCapacityPercent must be between 1 and 100");
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "minCapacityPercent must be between 1 and 100");
         }
         if(config.getMaxCapacity()<=0){
-           throw new IllegalArguementException("maxCapacity must be > 0");
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "maxCapacity must be > 0");
         }
         if(config.getMaxCapacity() > config.getTotalHeadcount()){
-           throw new IllegalArguementException("maxCapacity cannot be exceed totalHeadcount");
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "maxCapacity cannot be exceed totalHeadcount");
         }
         return ResponseEntity.ok(service.create(config));
     }
