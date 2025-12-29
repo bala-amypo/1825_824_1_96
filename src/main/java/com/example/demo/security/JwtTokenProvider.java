@@ -53,7 +53,7 @@ public class JwtTokenProvider{
         try{
             getClaims(token);
             return true;
-        }catch(Ecxeption e){
+        }catch(Exception e){
             return false;
         }
     }
