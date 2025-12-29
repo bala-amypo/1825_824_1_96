@@ -25,5 +25,19 @@ public class TeamCapacityConfig {
     public Long getId(){
         return id;
     }
-    
+    public String getTeamName(){
+        return teamName;
+    }
+    public int getMaxCapacity(){
+        return maxCapacity;
+    }
+    public void setId(Long id){
+        this.id=id;
+    }
+    public void setTeamName(String teamName){
+        this.teamName=teamName;
+    }
+    public void setMaxCapacity(int maxCapacity){
+        this.maxCapacity=maxCapacity;
+    }
 }
