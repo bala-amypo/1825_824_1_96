@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import com.example.model.demo.UserAccount;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
