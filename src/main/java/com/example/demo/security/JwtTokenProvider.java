@@ -20,6 +20,14 @@ public class JwtTokenProvider{
     private long jwtExpiration;
 
     private Key getSigningKey(){
-        return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8))
+        return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+    }
+    public String generateToken(String username){
+        return Jwts.builder()
+               .setSubject(username)
+               .setIssuedAt(new Date())
+               .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+               .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+               .compact();
     }
 }
