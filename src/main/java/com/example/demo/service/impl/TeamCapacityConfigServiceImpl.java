@@ -4,6 +4,7 @@ import com.example.demo.model.TeamCapacityConfig;
 import com.example.demo.repository.TeamCapacityConfigRepository;
 import com.example.demo.service.TeamCapacityConfigService;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService {
@@ -15,8 +16,8 @@ public class TeamCapacityConfigServiceImpl implements TeamCapacityConfigService 
     }
 
     @Override
-    public TeamCapacityConfig createRule(TeamCapacityConfig rule) {
-        return repository.save(rule);
+    public TeamCapacityConfig create(TeamCapacityConfig config) {
+        return repository.save(config);
     }
 
     @Override
