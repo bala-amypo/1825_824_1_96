@@ -14,22 +14,30 @@ public class TeamCapacityConfig {
     private String teamName;
 
     @Column(nullable = false)
-    private int totalHead
+    private int totalHeadcount;
+
+    @Column(nullable = false)
+    private int minCapacityPercent;
 
     @Column(nullable = false)
     private int maxCapacity;
 
     public TeamCapacityConfig() {}
 
-    public TeamCapacityConfig(String teamName, int maxCapacity){
+    public TeamCapacityConfig(String teamName, int totalHeadcount, int minCapacityPercent, int maxCapacity){
         this.teamName=teamName;
         this.maxCapacity=maxCapacity;
+        this.totalHeadcount=totalHeadcount;
+        this.minCapacityPercent=minCapacityPercent;
     }
     public Long getId(){
         return id;
     }
     public String getTeamName(){
         return teamName;
+    }
+    public int totalHeadcount(){
+        return totalHeadcount;
     }
     public int getMaxCapacity(){
         return maxCapacity;
