@@ -23,7 +23,14 @@ public class TeamCapacityConfigController{
     public ResponseEntity<TeamCapacityConfig> update(@PathVariable Long id, @RequestBody TeamCapacityConfig config){
         return ResponseEntity.ok(service.update(id, config));
     }
-    @GetMapping("/{}")
+    @GetMapping("/{teamName}")
+    public ResponseEntity<TeamCapacityConfig> getByTeam(@PathVariable String teamName){
+        return ResponseEntity.ok(service.getByTeamName(teamName));
+    }
+    @GetMapping
+    public ResponseEntity<List<TeamCapacityConfig>> getAll(){
+        return ResponseEntity.ok(service.getAll());
+    }
 }
 
 
