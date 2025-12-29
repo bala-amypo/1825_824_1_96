@@ -26,7 +26,9 @@ public class TeamCapacityConfigController{
         if(config.getMaxCapacity()<=0){
            throw new IllegalArguementException("maxCapacity must be > 0");
         }
-        if(config.getMaxCapacity() > c)
+        if(config.getMaxCapacity() > config.getTotalHeadcount()){
+           throw new IllegalArguementException("maxCapacity cannot be exceed totalHeadcount");
+        }
         return ResponseEntity.ok(service.create(config));
     }
     @PutMapping("/{id}")
