@@ -13,6 +13,17 @@ import java.util.List;
 public class SwaggerConfig{
         @Bean
         public openAPI customOpenAPI(){
-                
+                final String securitySchemeName="BearerAuth";
+                return new OpenAPI()
+                       .servers(List.of(
+                               new Server().url("https://9029.32procr.amypo.ai/")
+                       ))
+                       .addSecurityItem(
+                               new SecurityRequirement().addList(securitySchemeName)
+                       )
+                       .components(
+                             new Components()
+                                     .add
+                       )
         }
 }
