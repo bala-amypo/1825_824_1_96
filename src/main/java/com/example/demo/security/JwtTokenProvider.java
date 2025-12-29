@@ -10,18 +10,3 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 
-@Component
-public class JwtTokenProvider{
-
-    @Value("${jwt.secret}")
-    private long jwtSecret;
-
-    @Value("${jwt.expiration}")
-    private long jwtExpiration;
-
-    private Key getSigninKey(){
-        return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
-    }
-    
-
-}
