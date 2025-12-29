@@ -12,7 +12,7 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig{
         @Bean
-        public openAPI customOpenAPI(){
+        public OpenAPI customOpenAPI(){
                 final String securitySchemeName="BearerAuth";
                 return new OpenAPI()
                        .servers(List.of(
