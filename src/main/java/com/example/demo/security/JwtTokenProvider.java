@@ -43,6 +43,18 @@ public class JwtTokenProvider{
     }
     public String getRole(String token){
         Object role = getClaims(token).get("role");
-        return role !=
+        return role != null ? role.toString() : null;
+    }
+    public Long getUserId(String token){
+        Object id = getClaims(token).get("userId");
+        return id != null ? Long.parseLong(id.toString()) : null;
+    }
+    public boolean validateToken(String token){
+        try{
+            getClaims(token);
+            return true;
+        }catch(Ecxeption e){
+            return false;
+        }
     }
 }
