@@ -20,7 +20,13 @@ public class TeamCapacityConfigController{
         if(config.getTotalHeadcount()<=0){
            throw new IllegalArguementException("totalHeadcount must be > 0");
         }
-        if(config)
+        if(config.getMinCapacityPercent()<=0 || config.getMinCapacityPercent()>100){
+           throw new IllegalArguementException("minCapacityPercent must be between 1 and 100");
+        }
+        if(config.getMaxCapacity()<=0){
+           throw new IllegalArguementException("maxCapacity must be > 0");
+        }
+        if(config.getMaxCapacity() > c)
         return ResponseEntity.ok(service.create(config));
     }
     @PutMapping("/{id}")
