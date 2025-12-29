@@ -11,5 +11,16 @@ import java.util.Date;
 public class JwtTokenProvider{
 
     @Value("${jwt.secret}")
-    
+    private long jwtSecret;
+
+    @Value("${jwt.expiration}")
+    private long jwtExpiration;
+
+    public String generateToken(String username){
+        return Jwts.builder()
+               .setSubject(username)
+               .setIssuedAt(new Date())
+               .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+               .signWith(Signa)
+    }
 }
